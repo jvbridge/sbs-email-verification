@@ -20,7 +20,7 @@ Programmars:
 
 Jonathan Bridge: http://github.com/jvbridge
 
-Juliaus Canales: https://github.com/stormiestcampfire
+Julius Canales: https://github.com/stormiestcampfire
 
 Caitlin Lindauer: https://github.com/CL2731
 
