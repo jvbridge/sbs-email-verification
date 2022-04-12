@@ -11,6 +11,25 @@ function getAbstractData() {
             return response.json();
         })
         .then(function (data) {
-                console.log(data);
-            });
+            console.log(data);
+
+            var email = data.email;
+            var autocorrect = data.autocorrect;
+            var deliverability = data.deliverability;
+            var qualityScore = data.quality_score;
+            var isValidFormatBoolean = data.is_valid_format.value;
+            var isValidFormatString = data.is_valid_format.text;
+            var isFreeEmailBoolean = data.is_free_email.value;
+            var isFreeEmailString = data.is_free_email.text;
+            var isDisposableEmailBoolean = data.is_disposable_email.value;
+            var isDisposableEmailString = data.is_disposable_email.text;
+            var isRoleEmailBoolean = data.is_role_email.value;
+            var isRoleEmailString = data.is_role_email.text;
+            var isCatchallEmailBoolean = data.is_catchall_email.value;
+            var isCatchallEmailString = data.is_catchall_email.text;
+            var isMxFoundBoolean = data.is_mx_found.value;
+            var isMxFoundString = data.is_mx_found.text;
+            var isSmtpValidBoolean = data.is_smtp_valid.value;
+            var isSmtpValidString = data.is_smtp_valid.text;
+        });
 };
