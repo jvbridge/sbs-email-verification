@@ -27,9 +27,16 @@ function getAbstractData() {
             var isRoleEmailString = data.is_role_email.text;
             var isCatchallEmailBoolean = data.is_catchall_email.value;
             var isCatchallEmailString = data.is_catchall_email.text;
-            var isMxFoundBoolean = data.is_mx_found.value;
-            var isMxFoundString = data.is_mx_found.text;
             var isSmtpValidBoolean = data.is_smtp_valid.value;
             var isSmtpValidString = data.is_smtp_valid.text;
+
+            $('#email-input').text('Email' + email);
+            $('#deliverability-output').text('Deliverability: ' + deliverability);
+            $('#quality-score-output').text('Quality score: ' + qualityScore);
+            $('#is-free-email').text("From Abstract's list of free email providers: " + isFreeEmailString);
+            $('#is-disposable-email').text("From Abstract's list of disposable email providers: " + isDisposableEmailString);
+            $('#is-role-email').text("Email for role rather than individual: " + isRoleEmailString);
+            $('#is-catchall-email').text("Email is a catchall for its domain: " +isCatchallEmailString);
+            $('#is-smtp-valid').text("Email SMTP check: " + isSmtpValidString);
         });
 };
