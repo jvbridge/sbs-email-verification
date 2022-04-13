@@ -134,8 +134,5 @@ document.addEventListener("click", function(event) {
         userInput = formInput.value;
         console.log(userInput);
         getAbstractDataNoQuery(userInput);
-    } else if (event.target.matches("#passwordBtn")) {
-        var formInput = document.querySelector("#passwordInput")
-        getAbstractDataNoQuery(userInput);
     }
 });
