@@ -16,7 +16,7 @@ A web app that detects if your email has been leaked and the reputation it may h
 
 ## Credits
 
-Programmars: 
+Programmers: 
 
 Jonathan Bridge: http://github.com/jvbridge
 
