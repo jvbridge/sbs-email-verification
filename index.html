@@ -6,38 +6,36 @@
   <link rel='stylesheet' href='./assets/css/style.css'>
 </head>
 <body>
-  <section id='form'>
-    <div class="field is-grouped">
-      <p class="control has-icons-left has-icons-right is-expanded" >
-        <input class="input" type="email" placeholder="Email">
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-      </p>
-      <p class="control">
-        <a class="button is-info">
-          Search
-        </a>
-      </p>
-    </div>
-    <div class="field is-grouped">
-      <p class="control has-icons-left is-expanded">
-        <input class="input" type="password" placeholder="Password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-      <p class="control">
-        <a class="button is-info">
-          Search
-        </a>
-      </p>
-    </div>
-  </section>
-  <!-- Section container to render data upon form submission -->
-  <section id='output'>
+  <!-- bulma columns section that contains the email/password forms as one column and the API requested data as the other -->
+  <div class="columns is-vcentered" id="form-and-output">
+    <!-- Section that contains the email and password submission forms -->
+    <section class="column is-one-third" id='form'>
+      <div class="field is-grouped">
+        <p class="control is-expanded" >
+          <input class="input" type="email" placeholder="Email">
+        </p>
+        <p class="control">
+          <a class="button is-info">
+            Search
+          </a>
+        </p>
+      </div>
+      <div class="field is-grouped">
+        <p class="control is-expanded">
+          <input class="input" type="password" placeholder="Password">
+        </p>
+        <p class="control">
+          <a class="button is-info">
+            Search
+          </a>
+        </p>
+      </div>
+    </section>
+    <!-- Section that contains the API requested data -->
+    <section class="column is-two-thirds" id='output'>
 
-  </section>
+    </section>
+  </div>
   <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
   <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
   <script src='./assets/js/script.js'></script>

@@ -1,14 +1,25 @@
 /*  */
 /*  */
-/* section container for results from form submission */
+/*  */
+/* bulma columns section that contains the email/password forms as one column and the API requested data as the other */
+#form-and-output {
+    margin: 10px 20px 10px 10px;
+}
+/* section that contains the email & password submission forms */
+#form {
+    border: 1px solid black;
+    justify-content: center;
+    margin: 0 5px 5px 5px;
+}
+/* section that contains the API requested data */
 #output {
     padding: 0 0 10px 0;
-    width: 500px;
     border: 1px solid black;
     background-color: rgb(229, 229, 229);
     color: black;
+    margin: 5px 5px 0 5px;
 }
-/* class for the list of h4s that display the data retrieved from the Abstract API */
+/* class for the list of h4s that display within the #output section */
 .data-output {
     margin: 10px 0 0 20px;
     font-size: 16px;
@@ -17,4 +28,5 @@
 /*  */
 /*  */
 /*  */
+
 
