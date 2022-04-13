@@ -1,0 +1,19 @@
+/*  */
+/*  */
+/* section container for results from form submission */
+#output {
+    padding: 0 0 10px 0;
+    width: 500px;
+    border: 1px solid black;
+    background-color: rgb(229, 229, 229);
+    color: black;
+}
+/* classes for the list of h4s with assigned out */
+.data-output {
+    margin: 10px 0 0 20px;
+    font-size: 16px;
+    color: black;
+}
+/*  */
+/*  */
+/*  */
