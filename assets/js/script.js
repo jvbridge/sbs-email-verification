@@ -1,41 +1,50 @@
 /**
- * @param {string} userInput - default email to avoid unnecessary api queries
+ * @type {string} a refrence to the abstract API URL
+ */
+const abstractApiUrl ="https://emailvalidation.abstractapi.com/v1/";
+/**
+ * @type {string} userInput - default email to avoid unnecessary api queries
  */
 var userInput = 'jkwalsh127@gmail.com';
 /**
- *  @param {string} key - api key for Abstract
+ *  @type {string} key - api key for Abstract
  */
 var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 
 /**
- * @param {function} getAbstractData - makes the request to the Abstract API, stores data as object, and ppends data to html doc
+ * Makes the request to the Abstract API, stores data as object, and appends the
+ * data to the DOM
  */
-// This function will make the request to the Abstract API
 function getAbstractData() {
     // Fetch data from the appropriate URL, applying the neccesasry API key and
     // user-submitted email as the variables key and userInput, respectively
-    var requestUrl = 'https://emailvalidation.abstractapi.com/v1/?api_key=' + key + '&email=' + userInput;
+    var requestUrl = abstractApiUrl  + "?api_key=" + key + '&email=' + userInput;
+
+    // main fetch
     fetch(requestUrl)
         .then(function (response) {
+            // simply return the response of the server to the next promise
             return response.json();
         })
         .then(function (data) {
             console.log(data);
-            // if the Abstract API detects a type in the submission, it will provide an autocorrect solution,
-            // which will be provided as a recommendation to the user through a sweetalert.js notification
+
+            // check if the abstract API detects a typo in the submission
             if (data.autocorrect != "") {
                 console.log(data.autocorrect);
+                // sweetalert.js notification of the problem with a solution
                 swal("Error", "There was a typo detected. Maybe you meant" + data.autocorrect);
                 return;
-            // if the Abstract API detects the submission was in an invalid email format,
-            // this check will prompt the user to try again through a sweetalert.js notification
-            } else if (data.is_valid_format == false) {
+            }
+
+            // check if it's an invalid email format
+            if (data.is_valid_format == false) {
+                // promt the user about the problem with sweetalert.js
                 swal("Error", "The email entered was not in a valid format. Please try again.");
                 return;
-            };
-            // if the checks where passed, the following code creates variables for the data retreived from the
-            // API request, creates h4 elements and assigns them classes as well as the corresponding data, and
-            // finally appends each one to the '#output' section of the html doc
+            }
+
+            // checks were passed, make an object with all the relevant data
             var abstractOutput = {
                 email: data.email,
                 deliverability: data.deliverability,
@@ -49,36 +58,53 @@ function getAbstractData() {
                 isCatchallEmailBoolean: data.is_catchall_email.value,
                 isCatchallEmailString: data.is_catchall_email.text,
                 isSmtpValidBoolean: data.is_smtp_valid.value,
-                isSmtpValidString: data.is_smtp_valid.text,
-            }
+                isSmtpValidString: data.is_smtp_valid.text
+            };
 
-
+            // get a refrence to the output element to put the data on
             var outputEl = $('#output');
+
+            // create an element to display the email
             var emailInput = $('<h4>');
             emailInput.text('Email: ' + abstractOutput.email);
-            emailInput.attr('class', 'data-output')
+            emailInput.attr('class', 'data-output');
+
+            // create an element to show if the email is deliverable to
             var deliverabilityOutput = $('<h4>');
             deliverabilityOutput.text('Deliverability: ' + abstractOutput.deliverability);
-            deliverabilityOutput.attr('class', 'data-output')
+            deliverabilityOutput.attr('class', 'data-output');
+
+            // create an element to show the quality score
             var qualityScoreOutput = $('<h4>');
             qualityScoreOutput.text('Quality score: ' + abstractOutput.qualityScore);
-            qualityScoreOutput.attr('class', 'data-output')
+            qualityScoreOutput.attr('class', 'data-output');
+
+            // create an element to show if it's a free email
             var isFreeEmail = $('<h4>');
             isFreeEmail.text("From Abstract's list of free email providers: " + abstractOutput.isFreeEmailString);
-            isFreeEmail.attr('class', 'data-output')
+            isFreeEmail.attr('class', 'data-output');
+
+            // create an element to show if it's a disposable email
             var isDisposableEmail = $('<h4>');
             isDisposableEmail.text("From Abstract's list of disposable email providers: " + abstractOutput.isDisposableEmailString);
-            isDisposableEmail.attr('class', 'data-output')
+            isDisposableEmail.attr('class', 'data-output');
+
+            // create an element to show if the email is a person or a role
             var isRoleEmail = $('<h4>');
             isRoleEmail.text("Email for role rather than individual: " + abstractOutput.isRoleEmailString);
-            isRoleEmail.attr('class', 'data-output')
+            isRoleEmail.attr('class', 'data-output');
+
+            // create an element to show if the email is a "catch all" one for its domain
             var isCatchallEmail = $('<h4>');
             isCatchallEmail.text("Email is a catchall for its domain: " + abstractOutput.isCatchallEmailString);
-            isCatchallEmail.attr('class', 'data-output')
+            isCatchallEmail.attr('class', 'data-output');
+
+            // create an element to show if the email has SMTP
             var isSmtpValid = $('<h4>');
             isSmtpValid.text("Email SMTP check: " + abstractOutput.isSmtpValidString);
-            isSmtpValid.attr('class', 'data-output')
+            isSmtpValid.attr('class', 'data-output');
 
+            // append all elements to our output element
             outputEl.append(emailInput);
             outputEl.append(deliverabilityOutput);
             outputEl.append(qualityScoreOutput);
@@ -88,47 +114,47 @@ function getAbstractData() {
             outputEl.append(isCatchallEmail);
             outputEl.append(isSmtpValid);
         });
-};
+}
 
 /**
  * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
  */
 function getAbstractDataNoQuery() {
 
-            var outputEl = $('#output');
-            var emailInput = $('<h4>');
-            emailInput.text('Email: jkwalsh127@gmail.com');
-            emailInput.attr('class', 'data-output')
-            var deliverabilityOutput = $('<h4>');
-            deliverabilityOutput.text('Deliverability: DELIVERABLE');
-            deliverabilityOutput.attr('class', 'data-output')
-            var qualityScoreOutput = $('<h4>');
-            qualityScoreOutput.text('Quality score: 0.70');
-            qualityScoreOutput.attr('class', 'data-output')
-            var isFreeEmail = $('<h4>');
-            isFreeEmail.text("From Abstract's list of free email providers: TRUE");
-            isFreeEmail.attr('class', 'data-output')
-            var isDisposableEmail = $('<h4>');
-            isDisposableEmail.text("From Abstract's list of disposable email providers: FALSE");
-            isDisposableEmail.attr('class', 'data-output')
-            var isRoleEmail = $('<h4>');
-            isRoleEmail.text("Email for role rather than individual: FALSE");
-            isRoleEmail.attr('class', 'data-output')
-            var isCatchallEmail = $('<h4>');
-            isCatchallEmail.text("Email is a catchall for its domain: FALSE");
-            isCatchallEmail.attr('class', 'data-output')
-            var isSmtpValid = $('<h4>');
-            isSmtpValid.text("Email SMTP check: TRUE");
-            isSmtpValid.attr('class', 'data-output')
+    var outputEl = $('#output');
+    var emailInput = $('<h4>');
+    emailInput.text('Email: jkwalsh127@gmail.com');
+    emailInput.attr('class', 'data-output');
+    var deliverabilityOutput = $('<h4>');
+    deliverabilityOutput.text('Deliverability: DELIVERABLE');
+    deliverabilityOutput.attr('class', 'data-output');
+    var qualityScoreOutput = $('<h4>');
+    qualityScoreOutput.text('Quality score: 0.70');
+    qualityScoreOutput.attr('class', 'data-output');
+    var isFreeEmail = $('<h4>');
+    isFreeEmail.text("From Abstract's list of free email providers: TRUE");
+    isFreeEmail.attr('class', 'data-output');
+    var isDisposableEmail = $('<h4>');
+    isDisposableEmail.text("From Abstract's list of disposable email providers: FALSE");
+    isDisposableEmail.attr('class', 'data-output');
+    var isRoleEmail = $('<h4>');
+    isRoleEmail.text("Email for role rather than individual: FALSE");
+    isRoleEmail.attr('class', 'data-output');
+    var isCatchallEmail = $('<h4>');
+    isCatchallEmail.text("Email is a catchall for its domain: FALSE");
+    isCatchallEmail.attr('class', 'data-output');
+    var isSmtpValid = $('<h4>');
+    isSmtpValid.text("Email SMTP check: TRUE");
+    isSmtpValid.attr('class', 'data-output');
 
-            outputEl.append(emailInput);
-            outputEl.append(deliverabilityOutput);
-            outputEl.append(qualityScoreOutput);
-            outputEl.append(isFreeEmail);
-            outputEl.append(isDisposableEmail);
-            outputEl.append(isRoleEmail);
-            outputEl.append(isCatchallEmail);
-            outputEl.append(isSmtpValid);
+    outputEl.append(emailInput);
+    outputEl.append(deliverabilityOutput);
+    outputEl.append(qualityScoreOutput);
+    outputEl.append(isFreeEmail);
+    outputEl.append(isDisposableEmail);
+    outputEl.append(isRoleEmail);
+    outputEl.append(isCatchallEmail);
+    outputEl.append(isSmtpValid);
 };
 
 getAbstractDataNoQuery();
