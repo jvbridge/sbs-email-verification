@@ -3,6 +3,9 @@ A web app that detects if your email has been leaked and the reputation it may h
 
 ## Description
 
+This is a web app that takes a given email and returns whether the email has
+been leaked, or lost, and some basic information about said email. 
+
 ## Table of Contents
 
 * [Installation](#installation)
@@ -12,7 +15,17 @@ A web app that detects if your email has been leaked and the reputation it may h
 
 ## Installation
 
+The page is currently hosted at: 
+
+https://jvbridge.github.io/sbs-email-verification/
+
+If you wish to host it yourself you can download the files and put them on your
+webserver of choice.
+
 ## Usage
+
+Type your email, or an email you wish to know more about into the main box and 
+the results will be displayed on the page.
 
 ## Credits
 
@@ -26,6 +39,11 @@ Caitlin Lindauer: https://github.com/CL2731
 
 Jake Walsh: https://github.com/jkwalsh127
 
+technologies used:
+* jquery: https://jquery.com/
+* sweet alert https://sweetalert2.github.io/
+* have I been pwned API: https://haveibeenpwned.com/API/v3
+* abstract API email validation: https://www.abstractapi.com/email-verification-validation-api
 ## License
 
 MIT
