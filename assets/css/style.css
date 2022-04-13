@@ -1,3 +1,6 @@
+/*  */
+/*  */
+/* format sites main head */
 header {
     display: flex;
     justify-content: center;
@@ -14,8 +17,12 @@ header {
     transform: translateX(-60px) translateY(10px);
     color: white;
 }
+/*  */
+/*  */
 
-
+/*  */
+/*  */
+/* hero section */
 #hero {
     height: 200px;
     background: linear-gradient(0.25turn, #203e7d, #4E71BD);
@@ -34,16 +41,12 @@ header {
  margin: 20px 0 0 0;
  font-size: 20px;
 }
+/*  */
+/*  */
 
-
 /*  */
 /*  */
-/*  */
-/* bulma columns section that contains the email/password forms as one column and the API requested data as the other */
-#form-and-output {
-    margin: 10px 20px 10px 10px;
-}
-/* section that contains the email & password submission forms */
+/* section that contains the email submission forms */
 #form {
     width: 100%;
     height: fit-content;
@@ -51,11 +54,15 @@ header {
     justify-content: center;
     background: linear-gradient(0.25turn, #1b356e, #405d9b);
     border-top: 2px solid #18393d;
+    border-bottom: 2px solid #18393d;
+
 }
 #form-control {
     width: 60%;
     margin: 20px 0;
 }
+/*  */
+/*  */
 
 /*  */
 /*  */
@@ -74,7 +81,6 @@ header {
 }
 /*  */
 /*  */
-/*  */
 
 /*  */
 /*  */
@@ -90,4 +96,5 @@ footer {
     font-weight: 600;
     align-self: center;
 }
-
+/*  */
+/*  */
