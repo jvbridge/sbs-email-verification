@@ -119,14 +119,22 @@ function getAbstractData() {
         });
 }
 
-
-
 /**
  * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
  */
-function getAbstractDataNoQuery() {
+function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(DUMMY_DATA, outputEl);
 }
 
-getAbstractDataNoQuery();
+document.addEventListener("click", function(event) {
+    if (event.target.matches("#emailBtn")) {
+        var formInput = document.querySelector("#emailInput")
+        userInput = formInput.value;
+        console.log(userInput);
+        getAbstractDataNoQuery();
+    } else if (event.target.matches("#passwordBtn")) {
+        var formInput = document.querySelector("#passwordInput")
+        getAbstractDataNoQuery();
+    }
+});
