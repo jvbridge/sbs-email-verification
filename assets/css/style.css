@@ -1,3 +1,41 @@
+header {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0.25turn, #112246, #2c416e);
+    border-bottom: 4px solid #18393d;
+}
+#main-logo {
+    height: 150px;
+    margin: 10px 0 10px 0;
+}
+#main-heading {
+    align-self: center;
+    font-size: 40px;
+    transform: translateX(-60px) translateY(10px);
+    color: white;
+}
+
+
+#hero {
+    height: 200px;
+    background: linear-gradient(0.25turn, #203e7d, #4E71BD);
+    display: flex;
+    flex-direction: column;
+}
+#welcome-heading {
+    color: white;
+    align-self: center;
+    margin: 50px 0 0 0;
+    font-size: 35px;
+}
+#welcome-paragraph {
+ color: white;
+ align-self: center;
+ margin: 20px 0 0 0;
+ font-size: 20px;
+}
+
+
 /*  */
 /*  */
 /*  */
