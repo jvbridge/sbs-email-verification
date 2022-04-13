@@ -4,12 +4,12 @@
 const ABSTRACT_API_URL ="https://emailvalidation.abstractapi.com/v1/";
 
 /**
- * @type {string} userInput - default email to avoid unnecessary api queries
+ * @type {string} default email to avoid unnecessary api queries
  */
 var userInput = 'jkwalsh127@gmail.com';
 
 /**
- *  @type {string} key - api key for Abstract
+ *  @type {string} api key for Abstract
  */
 var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 
@@ -74,7 +74,7 @@ function createAbstractElement(data, jqueryEle) {
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
     isSmtpValid.attr('class', 'data-output');
     toAppend.push(isSmtpValid);
-
+    
     // append them all to the element we gave
     toAppend.forEach((value) => jqueryEle.append(value));
 }
@@ -119,14 +119,20 @@ function getAbstractData() {
         });
 }
 
-
-
 /**
  * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
  */
-function getAbstractDataNoQuery() {
+function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(DUMMY_DATA, outputEl);
+    console.log(userInput);
 }
 
-getAbstractDataNoQuery();
+document.addEventListener("click", function(event) {
+    if (event.target.matches("#email-btn")) {
+        var formInput = document.querySelector("#email-input")
+        userInput = formInput.value;
+        console.log(userInput);
+        getAbstractDataNoQuery(userInput);
+    }
+});
