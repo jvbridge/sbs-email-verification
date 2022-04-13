@@ -12,33 +12,34 @@
     <h1 id="main-heading">Security Breach Software email verification</h1>
   </header>
   <!--  -->
-  <section id="hero">
-    <h2 id="welcome-heading">Welcome to the SBS email verification web app</h2>
-    <p id="welcome-paragraph">Here you can check to see if your email was compromised in a data breach</p>
+  <section id='hero'>
+    <h2 id='welcome-heading'>Welcome to the SBS email verification web app</h2>
+    <p id='welcome-paragraph'>Here you can check to see if your email was compromised in a data breach</p>
   </section>
   <!--  -->
-  <section>
-    
+  <section id='form'>
+    <div class='field has-addons' id='form-control'>
+      <p class='control is-expanded' >
+        <input class='input' id='email-input' type='email' placeholder='Email'>
+      </p>
+      <p class='control'>
+        <a class='button is-info' id='email-btn'>
+          Search
+        </a>
+      </p>
+    </div>
   </section>
-  <!-- bulma columns section that contains the email/password forms as one column and the API requested data as the other -->
-  <div class='columns is-vcentered' id='form-and-output'>
-    <!-- Section that contains the email and password submission forms -->
-    <section class='column is-one-third' id='form'>
-      <div class='field is-grouped'>
-        <p class='control is-expanded' >
-          <input class='input' id='email-input' type='email' placeholder='Email'>
-        </p>
-        <p class='control'>
-          <a class='button is-info' id='email-btn'>
-            Search
-          </a>
-        </p>
-      </div>
-    </section>
-    <!-- Section that contains the API requested data -->
-    <section class='column is-two-thirds' id='output'>
 
-    </section>
+
+
+
+
+
+  </section>
+
+  <section class='column is-two-thirds' id='output'>
+
+  </section>
   </div>
   <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
   <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
