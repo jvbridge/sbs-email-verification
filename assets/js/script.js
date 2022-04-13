@@ -130,3 +130,21 @@ function getAbstractDataNoQuery() {
 }
 
 getAbstractDataNoQuery();
+
+
+/**
+ * @type {string} a refrence to the abstract API URL
+ */
+const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/" + userAccount
+
+/** 
+ * @type {string} userInput - default email to avoid unnecessary api queries
+ */
+var userAccount = 'juliuscanales118@gmail.com';
+
+/**
+ *  @type {string} key - api key for PWNED
+ */
+ var key = 'NaN';
+
+ 
