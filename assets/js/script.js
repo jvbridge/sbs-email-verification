@@ -4,12 +4,12 @@
 const ABSTRACT_API_URL ="https://emailvalidation.abstractapi.com/v1/";
 
 /**
- * @type {string} userInput - default email to avoid unnecessary api queries
+ * @type {string} default email to avoid unnecessary api queries
  */
 var userInput = 'jkwalsh127@gmail.com';
 
 /**
- *  @type {string} key - api key for Abstract
+ *  @type {string} api key for Abstract
  */
 var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 
@@ -17,7 +17,19 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
  * A nice use of our dummy data here
  * This is UGLY in the future we'll pull it from the .json file directly
  */
- const DUMMY_DATA = {"email":"jkwalsh127@gmail.com","autocorrect":"","deliverability":"DELIVERABLE","quality_score":"0.70","is_valid_format":{"value":true,"text":"TRUE"},"is_free_email":{"value":true,"text":"TRUE"},"is_disposable_email":{"value":false,"text":"FALSE"},"is_role_email":{"value":false,"text":"FALSE"},"is_catchall_email":{"value":false,"text":"FALSE"},"is_mx_found":{"value":true,"text":"TRUE"},"is_smtp_valid":{"value":true,"text":"TRUE"}};
+ const DUMMY_DATA = {
+    "email": "jkwalsh127@gmail.com",
+    "autocorrect": "",
+    "deliverability": "DELIVERABLE",
+    "quality_score": "0.70",
+    "is_valid_format": {"value": true, "text": "TRUE"},
+    "is_free_email": {"value": true, "text": "TRUE"},
+    "is_disposable_email": {"value": false, "text": "FALSE"},
+    "is_role_email": {"value": false, "text": "FALSE"},
+    "is_catchall_email": {"value": false, "text": "FALSE"},
+    "is_mx_found": {"value": true, "text": "TRUE"},
+    "is_smtp_valid": {"value": true, "text": "TRUE"}
+};
 
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
@@ -74,7 +86,7 @@ function createAbstractElement(data, jqueryEle) {
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
     isSmtpValid.attr('class', 'data-output');
     toAppend.push(isSmtpValid);
-
+    
     // append them all to the element we gave
     toAppend.forEach((value) => jqueryEle.append(value));
 }
@@ -119,14 +131,20 @@ function getAbstractData() {
         });
 }
 
-
-
 /**
  * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
  */
-function getAbstractDataNoQuery() {
+function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(DUMMY_DATA, outputEl);
+    console.log(userInput);
 }
 
-getAbstractDataNoQuery();
+document.addEventListener("click", function(event) {
+    if (event.target.matches("#emailBtn")) {
+        var formInput = document.querySelector("#emailInput")
+        userInput = formInput.value;
+        console.log(userInput);
+        getAbstractDataNoQuery(userInput);
+    }
+});
