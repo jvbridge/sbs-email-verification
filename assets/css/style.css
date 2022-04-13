@@ -34,12 +34,14 @@ header {
     align-self: center;
     margin: 50px 0 0 0;
     font-size: 35px;
+    text-align: center;
 }
 #welcome-paragraph {
  color: white;
  align-self: center;
  margin: 20px 0 0 0;
  font-size: 20px;
+ text-align: center;
 }
 /*  */
 /*  */
@@ -89,12 +91,190 @@ footer {
     height: 50px;
     display: flex;
     justify-content: center;
+    margin: 10px 30px;
 }
 #footer-heading {
     font-size: 20px;
     color: gray;
     font-weight: 600;
     align-self: center;
+    text-align: center;
 }
 /*  */
 /*  */
+
+@media screen and (max-width: 1055px) {
+    #main-heading {
+        font-size: 35px;
+    }
+    #welcome-heading {
+        font-size: 30px;
+        margin-top: 30px;
+    }
+    #hero {
+        height: 170px;
+    }
+}
+
+@media screen and (max-width: 965px) {
+    #main-heading {
+        font-size: 28px;
+    }
+    #welcome-heading {
+        font-size: 25px;
+    }
+    #hero {
+        height: 150px;
+    }
+    #welcome-paragraph {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 854px) {
+    #main-heading {
+        font-size: 40px;
+    }
+    #welcome-heading {
+        font-size: 30px;
+        margin-top: 30px;
+    }
+}
+
+@media screen and (max-width: 765px) {
+    #main-heading {
+        font-size: 35px;
+    }
+}
+
+@media screen and (max-width: 705px) {
+    #main-heading {
+        font-size: 30px;
+    }
+    #welcome-heading {
+        font-size: 28px;
+    }
+    #welcome-paragraph {
+        font-size: 18px;
+        margin: 10px 140px 0 140px;
+    }
+    #hero {
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 655px) {
+    #main-heading {
+        font-size: 30px;
+    }
+    #main-logo {
+        height: 120px;
+    }
+    #welcome-heading {
+        font-size: 25px;
+    }
+    #welcome-paragraph {
+        margin: 10px 100px 0 100px;
+    }
+}
+
+@media screen and (max-width: 585px) {
+    #main-heading {
+        font-size: 25px;
+    }
+    #hero {
+        height: 130px;
+    }
+    #welcome-heading {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+    #welcome-paragraph {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 535px) {
+    #main-heading {
+        font-size: 25px;
+        transform: translateX(-40px) translateY(10px);
+    }
+    #main-logo {
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #main-heading {
+        font-size: 20px;
+    }
+    #main-logo {
+        height: 80px;
+    }
+    #hero {
+        height: 160px;
+    }
+    #welcome-heading {
+        font-size: 20px;
+        margin: 20px 60px 0 60px;
+    }
+    #welcome-paragraph {
+        margin: 15px 50px 0 50px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #main-heading {
+        font-size: 18px;
+        transform: translateX(-30px) translateY(10px);
+    }
+    #main-logo {
+        height: 70px;
+    }
+    #hero {
+        height: 130px;
+    }
+    #welcome-heading {
+        font-size: 18px;
+        margin: 10px 60px 0 60px;
+    }
+    #welcome-paragraph {
+        margin: 10px 40px 0 40px;
+        font-size: 15px;
+    }
+    footer {
+        margin: 10px 50px;
+    }
+    #footer-heading {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #main-heading {
+        font-size: 16px;
+        transform: translateX(-15px) translateY(10px);
+        margin-bottom: 15px;
+    }
+    #main-logo {
+        height: 50px;
+    }
+    #welcome-heading {
+        margin: 5px 20px 0 20px;
+        font-size: 16px;
+    }
+    #welcome-paragraph {
+        font-size: 13px;
+        margin: 10px 10px 0 10px;
+    }
+    #form-control {
+        width: 90%;
+        margin-left: 5%;
+    }
+    #email-btn {
+        width: 80%; 
+    }
+    footer {
+        margin: 10px 30px;
+    }
+}
