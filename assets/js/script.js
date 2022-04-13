@@ -1,11 +1,13 @@
 /**
  * @type {string} a refrence to the abstract API URL
  */
-const abstractApiUrl ="https://emailvalidation.abstractapi.com/v1/";
+const ABSTRACT_API_URL ="https://emailvalidation.abstractapi.com/v1/";
+
 /**
  * @type {string} userInput - default email to avoid unnecessary api queries
  */
 var userInput = 'jkwalsh127@gmail.com';
+
 /**
  *  @type {string} key - api key for Abstract
  */
@@ -18,7 +20,7 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 function getAbstractData() {
     // Fetch data from the appropriate URL, applying the neccesasry API key and
     // user-submitted email as the variables key and userInput, respectively
-    var requestUrl = abstractApiUrl  + "?api_key=" + key + '&email=' + userInput;
+    var requestUrl = ABSTRACT_API_URL  + "?api_key=" + key + '&email=' + userInput;
 
     // main fetch
     fetch(requestUrl)
