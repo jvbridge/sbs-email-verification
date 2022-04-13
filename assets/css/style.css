@@ -8,7 +8,7 @@
     background-color: rgb(229, 229, 229);
     color: black;
 }
-/* classes for the list of h4s with assigned out */
+/* class for the list of h4s that display the data retrieved from the Abstract API */
 .data-output {
     margin: 10px 0 0 20px;
     font-size: 16px;
@@ -17,3 +17,4 @@
 /*  */
 /*  */
 /*  */
+

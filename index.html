@@ -2,9 +2,38 @@
 <head>
   <meta charset='utf-8'>
   <meta name='viewport" content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel='stylesheet' href='./assets/css/style.css'>
 </head>
 <body>
+  <section id='form'>
+    <div class="field is-grouped">
+      <p class="control has-icons-left has-icons-right is-expanded" >
+        <input class="input" type="email" placeholder="Email">
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+      </p>
+      <p class="control">
+        <a class="button is-info">
+          Search
+        </a>
+      </p>
+    </div>
+    <div class="field is-grouped">
+      <p class="control has-icons-left is-expanded">
+        <input class="input" type="password" placeholder="Password">
+        <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+      <p class="control">
+        <a class="button is-info">
+          Search
+        </a>
+      </p>
+    </div>
+  </section>
   <!-- Section container to render data upon form submission -->
   <section id='output'>
 
