@@ -141,8 +141,13 @@ function getAbstractDataNoQuery(userInput) {
 }
 
 document.addEventListener("click", function(event) {
+<<<<<<< HEAD
     if (event.target.matches("#emailBtn")) {
         var formInput = document.querySelector("#emailInput")
+=======
+    if (event.target.matches("#email-btn")) {
+        var formInput = document.querySelector("#email-input")
+>>>>>>> 6b0f0a82ca2a226661035385d838054f7fd7f7ac
         userInput = formInput.value;
         console.log(userInput);
         getAbstractDataNoQuery(userInput);
