@@ -1,19 +1,100 @@
 /*  */
 /*  */
-/* section container for results from form submission */
+/* format sites main head */
+header {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0.25turn, #112246, #2c416e);
+    border-bottom: 4px solid #18393d;
+}
+#main-logo {
+    height: 150px;
+    margin: 10px 0 10px 0;
+}
+#main-heading {
+    align-self: center;
+    font-size: 40px;
+    transform: translateX(-60px) translateY(10px);
+    color: white;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
+/* hero section */
+#hero {
+    height: 200px;
+    background: linear-gradient(0.25turn, #203e7d, #4E71BD);
+    display: flex;
+    flex-direction: column;
+}
+#welcome-heading {
+    color: white;
+    align-self: center;
+    margin: 50px 0 0 0;
+    font-size: 35px;
+}
+#welcome-paragraph {
+ color: white;
+ align-self: center;
+ margin: 20px 0 0 0;
+ font-size: 20px;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
+/* section that contains the email submission forms */
+#form {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0.25turn, #1b356e, #405d9b);
+    border-top: 2px solid #18393d;
+    border-bottom: 2px solid #18393d;
+
+}
+#form-control {
+    width: 60%;
+    margin: 20px 0;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
+/* section that contains the API requested data */
 #output {
-    padding: 0 0 10px 0;
-    width: 500px;
     border: 1px solid black;
     background-color: rgb(229, 229, 229);
     color: black;
+    width: 100%;
+    min-height: 400px;
 }
-/* classes for the list of h4s with assigned out */
+/* class for the list of h4s that display within the #output section */
 .data-output {
-    margin: 10px 0 0 20px;
     font-size: 16px;
     color: black;
 }
 /*  */
+/*  */
+
+/*  */
+/*  */
+/* footer */
+footer {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+#footer-heading {
+    font-size: 20px;
+    color: gray;
+    font-weight: 600;
+    align-self: center;
+}
 /*  */
 /*  */

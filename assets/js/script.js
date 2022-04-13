@@ -1,15 +1,15 @@
 /**
- * @type {string} a refrence to the abstract API URL
+ * @type {string} a reference to the abstract API URL
  */
 const ABSTRACT_API_URL ="https://emailvalidation.abstractapi.com/v1/";
 
 /**
- * @type {string} userInput - default email to avoid unnecessary api queries
+ * @type {string} default email to avoid unnecessary api queries
  */
 var userInput = 'jkwalsh127@gmail.com';
 
 /**
- *  @type {string} key - api key for Abstract
+ *  @type {string} api key for Abstract
  */
 var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 
@@ -74,7 +74,7 @@ function createAbstractElement(data, jqueryEle) {
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
     isSmtpValid.attr('class', 'data-output');
     toAppend.push(isSmtpValid);
-
+    
     // append them all to the element we gave
     toAppend.forEach((value) => jqueryEle.append(value));
 }
@@ -113,38 +113,68 @@ function getAbstractData() {
                 return;
             }
 
-            // get a refrence to the output element to put the data on
+            // get a reference to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
         });
 }
 
-
-
 /**
  * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
  */
-function getAbstractDataNoQuery() {
+function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(DUMMY_DATA, outputEl);
+    console.log(userInput);
 }
 
 getAbstractDataNoQuery();
 
 
+ 
+document.addEventListener("click", function(event) {
+    if (event.target.matches("#email-btn")) {
+        var formInput = document.querySelector("#email-input")
+        userInput = formInput.value;
+        console.log(userInput);
+        getAbstractDataNoQuery(userInput);
+    }
+});
+
+
+
 /**
- * @type {string} a refrence to the abstract API URL
+ * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
  */
-const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/" + userAccount
+const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/"
 
 /** 
- * @type {string} userInput - default email to avoid unnecessary api queries
+ * @type {string} userInput - default email to avoid unnecessary API queries
  */
 var userAccount = 'juliuscanales118@gmail.com';
 
 /**
- *  @type {string} key - api key for PWNED
+ *  @type {string} key - API key for PWNED
  */
- var key = 'NaN';
+ var pwnedKey = 'NaN';
 
- 
+
+function getPwnedAPI() {
+    let requestURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount
+    fetch(requestURL)
+      .then(function (response) {
+        return response.json();
+      })
+
+      .then(function (pwnedData) {
+        console.log(pwnedData);
+        // getting an output to then append in an element for pwned
+          var pwnedOutput = $('#output');
+            createPwnedElement(pwnedData, pwnedOutput);
+        }
+      );
+  }
+  
+  fetchButton.addEventListener('click', getApi);
+  
+  
