@@ -275,7 +275,9 @@ function search(){
 
     // add it to our history
     addToHistory(query, historyData);
-
+    
+    // add the history to local storage
+    storeHistory();
     // make pwned elements for each one
     pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
