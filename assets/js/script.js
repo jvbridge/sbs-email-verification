@@ -32,6 +32,13 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 };
 
 /**
+ * This is the regex we use to match with emails it is long and complicated
+ * solution found at:
+ * https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+ */
+const EMAIL_REGEX = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+/**
  * @type {object[]} an array of query results from the api queries we have made
  * used to store previous queries for ease of access as well as 
  */
@@ -42,6 +49,11 @@ var queryHistory = [];
  * @type {string}
  */
 const HISTORY_KEY = "history";
+
+/**
+ * A reference to the jquery object for the output
+ */
+var outputEle = $("#output");
 
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
@@ -145,7 +157,8 @@ async function getAbstractData() {
             // get a reference to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
-        });  
+        });
+    return returnedData;
 }
 
 /**
@@ -169,6 +182,7 @@ document.addEventListener("click", function(event) {
     }
 });
 
+// adds the event listener for the key down event
 document.addEventListener("keydown", (event) =>{
     if (event.key === "Enter" && ($("#email-input").is(":focus"))){
         search();
@@ -222,14 +236,19 @@ var PWNED_DUMMY_DATA = [
  */
 function search(){
 
-    $("#output").empty();
+    clearOutput();
 
     var formInput = $("#email-input");
     var query = formInput.val();
 
+    // validate our input to see if it's good
+    if (!isValid(query)){
+        swal("Error", "Looks like that's not an email address!");
+        return;
+    }
+
     // empty the input 
     formInput.val("");
-    console.log(query);
 
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
@@ -247,14 +266,14 @@ function search(){
     addToHistory(query, historyData);
 
     // make pwned elements for each one
-    pwnedData.forEach((value) => createPwnedElement(value,$("#output")));
+    pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
 }
 
 /**
  * Appends what we were doing to the history 
  * @param {string} query the user's query that caused this history item
- * @param {*} data the resulting history item from said query
+ * @param {object} data the resulting history item from said query
  */
 function addToHistory(query, data){
     var historyItem = {
@@ -283,9 +302,6 @@ function retrieveHistory(){
         queryHistory = JSON.parse(data);
     }
 }
-
-
-
 
 /**
  * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
@@ -412,4 +428,34 @@ var DUMMY_DATA_PWNED = [
 
     jqueryPwnedElement.append(pwnedToAppend);
  } 
-   
+
+/**
+ * Checks if the input is okay to put through the 
+ * @param {string} input given 
+ * @returns {true} returned if the input is valid and should be sent to the API
+ * @returns {false} returned if the input is not valid and should not be sent
+ */
+function isValid(input){
+    var email = input.toLowerCase();
+    var match =  email.match(EMAIL_REGEX);
+    console.log("validating: ", input);
+    console.log("matched: ", match);
+    if (match){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Clears all of the output from the last API query
+ */
+function clearOutput(){
+    outputEle.empty();
+}
+
+/**
+ * Reads through the history and updates the approrpriate variables
+ */
+function readHistory(){
+
+}
