@@ -222,6 +222,9 @@ var PWNED_DUMMY_DATA = [
 function search(){
     var formInput = $("#email-input");
     var query = formInput.val();
+
+    // empty the input 
+    formInput.val("");
     console.log(query);
 
     // get the abstract data from the abastract data UI
@@ -238,6 +241,10 @@ function search(){
 
     // add it to our history
     addToHistory(query, historyData);
+
+    // make pwned elements for each one
+    pwnedData.forEach((value) => createPwnedElement(value,$("#output")));
+
 }
 
 /**
@@ -279,7 +286,7 @@ function retrieveHistory(){
 /**
  * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
  */
- const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/"
+ const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/";
 
  /** 
   * @type {string} userInput - default email to avoid unnecessary API queries
@@ -294,7 +301,7 @@ function retrieveHistory(){
  
  // Requesting data from the API
   function getPwnedAPI() {
-     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount
+     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount;
      fetch(requestPwnedURL)
        .then(function (response) {
          return response.json();
@@ -388,7 +395,7 @@ var DUMMY_DATA_PWNED = [
 
     var subtitle = $("<p class='subtitle is-6'>" + pwnedData.Domain+ "</p>");
     titleContainer.append(subtitle);
-    
+
     mediaContainer.append(titleContainer);
 
     // the description of what happened
@@ -399,16 +406,6 @@ var DUMMY_DATA_PWNED = [
 
     blurb.append($("<time datetime='" + pwnedData.BreachDate + "'></time>"));
 
-     // create an element to display the email
-    //  var pwnedEmailInput = $('<div>pwned-email-input</div>');
-    //  pwnedEmailInput.text('Email: ' + pwnedData.email);
-    //  pwnedEmailInput.attr('class', 'data-output');
-    //  pwnedToAppend.push(pwnedEmailInput);
-     // append them all to the elements we gave
-
     jqueryPwnedElement.append(pwnedToAppend);
  } 
-
- // to be removed before merge
- createPwnedElement(PWNED_DUMMY_DATA[0], $("#output"));
    
