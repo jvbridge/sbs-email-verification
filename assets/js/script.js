@@ -17,7 +17,7 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
  * A nice use of our dummy data here
  * This is UGLY in the future we'll pull it from the .json file directly
  */
- const DUMMY_DATA = {
+ const ABSTRACT_DUMMY_DATA = {
     "email": "jkwalsh127@gmail.com",
     "autocorrect": "",
     "deliverability": "DELIVERABLE",
@@ -30,6 +30,18 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
     "is_mx_found": {"value": true, "text": "TRUE"},
     "is_smtp_valid": {"value": true, "text": "TRUE"}
 };
+
+/**
+ * @type {object[]} an array of query results from the api queries we have made
+ * used to store previous queries for ease of access as well as 
+ */
+var queryHistory = [];
+
+/**
+ * The key used for storing our history to local storage
+ * @type {string}
+ */
+const HISTORY_KEY = "history";
 
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
@@ -95,14 +107,17 @@ function createAbstractElement(data, jqueryEle) {
 /**
  * Makes the request to the Abstract API, stores data as object, and appends the
  * data to the DOM
+ * @returns {object} the data object gained from the API
+ * @returns {null} in the event that the query is not successful it returns null
  */
-function getAbstractData() {
+async function getAbstractData() {
     // Fetch data from the appropriate URL, applying the neccesasry API key and
     // user-submitted email as the variables key and userInput, respectively
     var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + userInput;
+    var returnedData;
 
     // main fetch
-    fetch(requestUrl)
+    returnedData = await fetch(requestUrl)
         .then(function (response) {
             // simply return the response of the server to the next promise
             return response.json();
@@ -115,46 +130,47 @@ function getAbstractData() {
                 console.log(data.autocorrect);
                 // sweetalert.js notification of the problem with a solution
                 swal("Error", "There was a typo detected. Maybe you meant" + data.autocorrect);
-                return;
+                return null;
             }
 
             // check if it's an invalid email format
             if (data.is_valid_format == false) {
                 // promt the user about the problem with sweetalert.js
                 swal("Error", "The email entered was not in a valid format. Please try again.");
-                return;
+                return null;
             }
 
             // get a refrence to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
         });
+        
 }
 
 /**
- * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
+ * this is a copy of the getAbstractData fxn that will append dummy output to 
+ * html doc, thereby avoiding unnecessary queries during testing
+ * @param {string} userInput - kept in place to make ease of switching the 
+ * function when this comes back around
+ * @returns {object} the dummy data
  */
 function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
-    createAbstractElement(DUMMY_DATA, outputEl);
+    createAbstractElement(ABSTRACT_DUMMY_DATA, outputEl);
     console.log(userInput);
+    return ABSTRACT_DUMMY_DATA;
 }
 
 // adds the event listener for the email button 
 document.addEventListener("click", function(event) {
     if (event.target.matches("#email-btn")) {
-        var formInput = document.querySelector("#email-input");
-        userInput = formInput.value;
-        console.log(userInput);
-        getAbstractDataNoQuery(userInput);
+        search();
     }
 });
 
 document.addEventListener("keydown", (event) =>{
     if (event.key === "Enter" && ($("#email-input").is(":focus"))){
-        userInput = formInput.value;
-        console.log(userInput);
-        getAbstractDataNoQuery(userInput);
+        search();
     }
 });
 
@@ -197,3 +213,62 @@ var PWNED_DUMMY_DATA = [
     "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
     }
 ];
+
+/**
+ * This is the main search function to be used in the web app it will grab the
+ * query on its own and send it to the appropriate functions
+ * TODO: make work with asyncronous functions properly
+ */
+function search(){
+    var formInput = $("#email-input");
+    var query = formInput.val();
+    console.log(query);
+
+    // get the abstract data from the abastract data UI
+    var abstractData = getAbstractDataNoQuery(query);
+    
+    // get the pwed data from the pwned API
+    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    
+    // make an object holding both for the 
+    var historyData = {
+        "abstractData":abstractData,
+        "pwnedData": pwnedData
+    };
+
+    // add it to our history
+    addToHistory(query, historyData);
+}
+
+/**
+ * Appends what we were doing to the history 
+ * @param {string} query the user's query that caused this history item
+ * @param {*} data the resulting history item from said query
+ */
+function addToHistory(query, data){
+    var historyItem = {
+        "query": query,
+        "data": data
+    };
+    queryHistory.push(historyItem);
+    // TODO: make elements appear on the DOM for this
+    // TODO: append the search history queries to the input bar's autocomplete
+}
+
+/**
+ * Writes our history to local storage
+ */
+function storeHistory(){
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(queryHistory));
+}
+
+/**
+ * Rretrieves our history from local storage
+ */
+function retrieveHistory(){
+    var data;
+    data = localStorage.getItem(HISTORY_KEY);
+    if (data){
+        queryHistory = JSON.parse(data);
+    }
+}
