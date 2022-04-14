@@ -4,28 +4,43 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'>
   <link rel='stylesheet' href='./assets/css/style.css'>
+  <title>SBS email verification</title>
 </head>
 <body>
-  <!-- bulma columns section that contains the email/password forms as one column and the API requested data as the other -->
-  <div class='columns is-vcentered' id='form-and-output'>
-    <!-- Section that contains the email and password submission forms -->
-    <section class='column is-one-third' id='form'>
-      <div class='field is-grouped'>
-        <p class='control is-expanded' >
-          <input class='input' id='email-input' type='email' placeholder='Email'>
-        </p>
-        <p class='control'>
-          <a class='button is-info' id='email-btn'>
-            Search
-          </a>
-        </p>
-      </div>
-    </section>
-    <!-- Section that contains the API requested data -->
-    <section class='column is-two-thirds' id='output'>
+  <!-- main heading for top of web page -->
+  <header>
+    <img src='./assets/images/ktWhite-Blank-Wallpaper-14-cutout.png' id='main-logo'>
+    <h1 id="main-heading">Security Breach Software email verification</h1>
+  </header>
+  <!-- hero section to welcome and inform users -->
+  <section id='hero'>
+    <h2 id='welcome-heading'>Welcome to the SBS email verification web app</h2>
+    <p id='welcome-paragraph'>Here you can check to see if your email was compromised in a data breach</p>
+  </section>
+  <!-- section that contains the email submission form -->
+  <section id='form'>
+    <div class='field has-addons' id='form-control'>
+      <p class='control is-expanded' >
+        <input class='input' id='email-input' type='email' placeholder='enter your email here'>
+      </p>
+      <p class='control'>
+        <a class='button is-info' id='email-btn'>
+          Search
+        </a>
+      </p>
+    </div>
+  </section>
+  <!-- section that will contain api requested output -->
+  </section>
 
-    </section>
-  </div>
+  <section class='column is-two-thirds' id='output'>
+
+  </section>
+  <!-- footer -->
+  <footer>
+    <h4 id='footer-heading'>crafted by the SBS application synthesis group</h4>
+  </footer>
+
   <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
   <script src='https://code.jquery.com/jquery-1.12.4.js'></script>
   <script src='./assets/js/script.js'></script>

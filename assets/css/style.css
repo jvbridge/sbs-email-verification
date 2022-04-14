@@ -1,32 +1,280 @@
 /*  */
 /*  */
-/*  */
-/* bulma columns section that contains the email/password forms as one column and the API requested data as the other */
-#form-and-output {
-    margin: 10px 20px 10px 10px;
-}
-/* section that contains the email & password submission forms */
-#form {
-    border: 1px solid black;
+/* format sites main head */
+header {
+    display: flex;
     justify-content: center;
-    margin: 0 5px 5px 5px;
+    background: linear-gradient(0.25turn, #112246, #2c416e);
+    border-bottom: 4px solid #18393d;
 }
+#main-logo {
+    height: 150px;
+    margin: 10px 0 10px 0;
+}
+#main-heading {
+    align-self: center;
+    font-size: 40px;
+    transform: translateX(-60px) translateY(10px);
+    color: white;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
+/* hero section */
+#hero {
+    height: 200px;
+    background: linear-gradient(0.25turn, #203e7d, #4E71BD);
+    display: flex;
+    flex-direction: column;
+}
+#welcome-heading {
+    color: white;
+    align-self: center;
+    margin: 50px 0 0 0;
+    font-size: 35px;
+    text-align: center;
+}
+#welcome-paragraph {
+ color: white;
+ align-self: center;
+ margin: 20px 0 0 0;
+ font-size: 20px;
+ text-align: center;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
+/* section that contains the email submission forms */
+#form {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0.25turn, #1b356e, #405d9b);
+    border-top: 2px solid #18393d;
+    border-bottom: 2px solid #18393d;
+
+}
+#form-control {
+    width: 60%;
+    margin: 20px 0;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
 /* section that contains the API requested data */
 #output {
-    padding: 0 0 10px 0;
     border: 1px solid black;
     background-color: rgb(229, 229, 229);
     color: black;
-    margin: 5px 5px 0 5px;
+    width: 100%;
+    min-height: 400px;
 }
 /* class for the list of h4s that display within the #output section */
 .data-output {
-    margin: 10px 0 0 20px;
     font-size: 16px;
     color: black;
 }
 /*  */
 /*  */
+
+/*  */
+/*  */
+/* footer */
+footer {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    margin: 10px 30px;
+}
+#footer-heading {
+    font-size: 20px;
+    color: gray;
+    font-weight: 600;
+    align-self: center;
+    text-align: center;
+}
+/*  */
 /*  */
 
+@media screen and (max-width: 1055px) {
+    #main-heading {
+        font-size: 35px;
+    }
+    #welcome-heading {
+        font-size: 30px;
+        margin-top: 30px;
+    }
+    #hero {
+        height: 170px;
+    }
+}
 
+@media screen and (max-width: 965px) {
+    #main-heading {
+        font-size: 28px;
+    }
+    #welcome-heading {
+        font-size: 25px;
+    }
+    #hero {
+        height: 150px;
+    }
+    #welcome-paragraph {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 854px) {
+    #main-heading {
+        font-size: 40px;
+    }
+    #welcome-heading {
+        font-size: 30px;
+        margin-top: 30px;
+    }
+}
+
+@media screen and (max-width: 765px) {
+    #main-heading {
+        font-size: 35px;
+    }
+}
+
+@media screen and (max-width: 705px) {
+    #main-heading {
+        font-size: 30px;
+    }
+    #welcome-heading {
+        font-size: 28px;
+    }
+    #welcome-paragraph {
+        font-size: 18px;
+        margin: 10px 140px 0 140px;
+    }
+    #hero {
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 655px) {
+    #main-heading {
+        font-size: 30px;
+    }
+    #main-logo {
+        height: 120px;
+    }
+    #welcome-heading {
+        font-size: 25px;
+    }
+    #welcome-paragraph {
+        margin: 10px 100px 0 100px;
+    }
+}
+
+@media screen and (max-width: 585px) {
+    #main-heading {
+        font-size: 25px;
+    }
+    #hero {
+        height: 130px;
+    }
+    #welcome-heading {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+    #welcome-paragraph {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 535px) {
+    #main-heading {
+        font-size: 25px;
+        transform: translateX(-40px) translateY(10px);
+    }
+    #main-logo {
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #main-heading {
+        font-size: 20px;
+    }
+    #main-logo {
+        height: 80px;
+    }
+    #hero {
+        height: 160px;
+    }
+    #welcome-heading {
+        font-size: 20px;
+        margin: 20px 60px 0 60px;
+    }
+    #welcome-paragraph {
+        margin: 15px 50px 0 50px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #main-heading {
+        font-size: 18px;
+        transform: translateX(-30px) translateY(10px);
+    }
+    #main-logo {
+        height: 70px;
+    }
+    #hero {
+        height: 130px;
+    }
+    #welcome-heading {
+        font-size: 18px;
+        margin: 10px 60px 0 60px;
+    }
+    #welcome-paragraph {
+        margin: 10px 40px 0 40px;
+        font-size: 15px;
+    }
+    footer {
+        margin: 10px 50px;
+    }
+    #footer-heading {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #main-heading {
+        font-size: 16px;
+        transform: translateX(-15px) translateY(10px);
+        margin-bottom: 15px;
+    }
+    #main-logo {
+        height: 50px;
+    }
+    #welcome-heading {
+        margin: 5px 20px 0 20px;
+        font-size: 16px;
+    }
+    #welcome-paragraph {
+        font-size: 13px;
+        margin: 10px 10px 0 10px;
+    }
+    #form-control {
+        width: 90%;
+        margin-left: 5%;
+    }
+    #email-btn {
+        width: 80%; 
+    }
+    footer {
+        margin: 10px 30px;
+    }
+}
