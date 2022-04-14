@@ -439,3 +439,10 @@ function isValid(input){
     }
     return false;
 }
+
+/**
+ * Clears all of the output from the last API query
+ */
+function clearOutput(){
+    $("#output").empty();
+}
