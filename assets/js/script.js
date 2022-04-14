@@ -381,15 +381,16 @@ var DUMMY_DATA_PWNED = [
     figure.append(imageLeft);
 
     // title 
-    var titleContainer = $("<div class='media-content></div>");
-    mediaContainer.append(titleContainer);
+    var titleContainer = $("<div class='media-content'></div>");
 
-    var title = $("<p class='title is-4'>" + pwnedData.title + "</p>");
+    var title = $("<p class='title is-4'>" + pwnedData.Title + "</p>");
     titleContainer.append(title);
-    
+
     var subtitle = $("<p class='subtitle is-6'>" + pwnedData.Domain+ "</p>");
     titleContainer.append(subtitle);
     
+    mediaContainer.append(titleContainer);
+
     // the description of what happened
     var blurb = $("<div class='content'>"+ pwnedData.Description+"</div>");
     cardContent.append(blurb);
