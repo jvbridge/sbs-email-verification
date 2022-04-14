@@ -1,5 +1,5 @@
 /**
- * @type {string} a refrence to the abstract API URL
+ * @type {string} a reference to the abstract API URL
  */
 const ABSTRACT_API_URL ="https://emailvalidation.abstractapi.com/v1/";
 
@@ -54,49 +54,50 @@ function createAbstractElement(data, jqueryEle) {
     // create an element to display the email
     var emailInput = $('<h4>');
     emailInput.text('Email: ' + data.email);
-    emailInput.attr('class', 'data-output');
+    // Gave attribute of centering the text, spaceing with a card body, and text it dark blue
+    emailInput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(emailInput);
 
     // create an element to show if the email is deliverable to
     var deliverabilityOutput = $('<h4>');
     deliverabilityOutput.text('Deliverability: ' + data.deliverability);
-    deliverabilityOutput.attr('class', 'data-output');
+    deliverabilityOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(deliverabilityOutput);
 
     // create an element to show the quality score
     var qualityScoreOutput = $('<h4>');
     qualityScoreOutput.text('Quality score: ' + data.qualityScore);
-    qualityScoreOutput.attr('class', 'data-output');
+    qualityScoreOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(qualityScoreOutput);
 
     // create an element to show if it's a free email
     var isFreeEmail = $('<h4>');
     isFreeEmail.text("From Abstract's list of free email providers: " + data.is_free_email.text);
-    isFreeEmail.attr('class', 'data-output');
+    isFreeEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isFreeEmail);
 
     // create an element to show if it's a disposable email
     var isDisposableEmail = $('<h4>');
     isDisposableEmail.text("From Abstract's list of disposable email providers: " + data.is_disposable_email.text);
-    isDisposableEmail.attr('class', 'data-output');
+    isDisposableEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isDisposableEmail);
 
     // create an element to show if the email is a person or a role
     var isRoleEmail = $('<h4>');
     isRoleEmail.text("Email for role rather than individual: " + data.is_role_email.text);
-    isRoleEmail.attr('class', 'data-output');
+    isRoleEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isRoleEmail);
 
     // create an element to show if the email is a "catch all" one for its domain
     var isCatchallEmail = $('<h4>');
     isCatchallEmail.text("Email is a catchall for its domain: " + data.is_catchall_email.text);
-    isCatchallEmail.attr('class', 'data-output');
+    isCatchallEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isCatchallEmail);
 
     // create an element to show if the email has SMTP
     var isSmtpValid = $('<h4>');
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
-    isSmtpValid.attr('class', 'data-output');
+    isSmtpValid.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isSmtpValid);
     
     // append them all to the element we gave
@@ -140,7 +141,7 @@ async function getAbstractData() {
                 return null;
             }
 
-            // get a refrence to the output element to put the data on
+            // get a reference to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
         });
@@ -223,6 +224,9 @@ var PWNED_DUMMY_DATA = [
 function search(){
     var formInput = $("#email-input");
     var query = formInput.val();
+
+    // empty the input 
+    formInput.val("");
     console.log(query);
 
     // get the abstract data from the abastract data UI
@@ -239,6 +243,10 @@ function search(){
 
     // add it to our history
     addToHistory(query, historyData);
+
+    // make pwned elements for each one
+    pwnedData.forEach((value) => createPwnedElement(value,$("#output")));
+
 }
 
 /**
@@ -273,3 +281,133 @@ function retrieveHistory(){
         queryHistory = JSON.parse(data);
     }
 }
+
+
+
+
+/**
+ * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
+ */
+ const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/";
+
+ /** 
+  * @type {string} userInput - default email to avoid unnecessary API queries
+  */
+ var userAccount = 'juliuscanales118@gmail.com';
+ 
+ /**
+  *  @type {string} key - API key for PWNED
+  */
+  var pwnedKey = 'NaN';
+ 
+ 
+ // Requesting data from the API
+  function getPwnedAPI() {
+     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount;
+     fetch(requestPwnedURL)
+       .then(function (response) {
+         return response.json();
+       })
+ 
+       .then(function (pwnedData) {
+         console.log(pwnedData);
+         // Getting an output to then append in an element for pwned
+           var pwnedOutput = $('#output');
+             createPwnedElement(pwnedData, pwnedOutput);
+         }
+       );
+ }
+ 
+ /**
+ * A dummy query for the have I been pwned API
+ */
+var DUMMY_DATA_PWNED = [
+    {
+    "Name":"Adobe",
+    "Title":"Adobe",
+    "Domain":"adobe.com",
+    "BreachDate":"2013-10-04",
+    "AddedDate":"2013-12-04T00:00Z",
+    "ModifiedDate":"2013-12-04T00:00Z",
+    "PwnCount":152445165,
+    "Description":"In October 2013, 153 million Adobe accounts were breached with each containing an internal ID, username, email, <em>encrypted</em> password and a password hint in plain text. The password cryptography was poorly done and <a href=\"http://stricture-group.com/files/adobe-top100.txt\" target=\"_blank\" rel=\"noopener\">many were quickly resolved back to plain text</a>. The unencrypted hints also <a href=\"http://www.troyhunt.com/2013/11/adobe-credentials-and-serious.html\" target=\"_blank\" rel=\"noopener\">disclosed much about the passwords</a> adding further to the risk that hundreds of millions of Adobe customers already faced.",
+    "DataClasses":["Email addresses","Password hints","Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/Adobe.png"
+    },
+    {
+    "Name":"BattlefieldHeroes",
+    "Title":"Battlefield Heroes",
+    "Domain":"battlefieldheroes.com",
+    "BreachDate":"2011-06-26",
+    "AddedDate":"2014-01-23T13:10Z",
+    "ModifiedDate":"2014-01-23T13:10Z",
+    "PwnCount":530270,
+    "Description":"In June 2011 as part of a final breached data dump, the hacker collective &quot;LulzSec&quot; <a href=\"http://www.rockpapershotgun.com/2011/06/26/lulzsec-over-release-battlefield-heroes-data\" target=\"_blank\" rel=\"noopener\">obtained and released over half a million usernames and passwords from the game Battlefield Heroes</a>. The passwords were stored as MD5 hashes with no salt and many were easily converted back to their plain text versions.",
+    "DataClasses":["Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
+    }
+];
+
+  /**
+   * Creates an object to add to the DOM, and appends it to the jquery element
+   * @param {object} pwnedObject - the data object returned from the API call
+   * @param {object} jqueryPwnedElement - the jquery element to append this to
+   */
+ function createPwnedElement (pwnedData, jqueryPwnedElement) {
+    /* this was made using the example code given by bulma, and putting the api
+     dummy output on it */
+    
+    // outer card 
+    var pwnedToAppend = $('<div class="card mb-3"></div>');
+    // inner card
+    var cardContent = $("<div class='card-content'></div>");
+    pwnedToAppend.append(cardContent);
+
+    // these all make the image on the left of the card
+    var mediaContainer = $("<div class='media'></div>");
+    cardContent.append(mediaContainer);
+    
+    var mediaLeft = $("<div class='media-left'></div>");
+    mediaContainer.append(mediaLeft);
+
+    var figure = $("<figure class='image is-48x48'></figure>");
+    mediaLeft.append(figure);
+
+    // our actual image
+    var imageLeft = $("<img />");
+    imageLeft.attr("src", pwnedData.LogoPath);
+    imageLeft.attr("alt", pwnedData.Title);
+    figure.append(imageLeft);
+
+    // title 
+    var titleContainer = $("<div class='media-content'></div>");
+
+    var title = $("<p class='title is-4'>" + pwnedData.Title + "</p>");
+    titleContainer.append(title);
+
+    var subtitle = $("<p class='subtitle is-6'>" + pwnedData.Domain+ "</p>");
+    titleContainer.append(subtitle);
+
+    mediaContainer.append(titleContainer);
+
+    // the description of what happened
+    var blurb = $("<div class='content'>"+ pwnedData.Description+"</div>");
+    cardContent.append(blurb);
+
+    blurb.append($("<br />"));
+
+    blurb.append($("<time datetime='" + pwnedData.BreachDate + "'></time>"));
+
+    jqueryPwnedElement.append(pwnedToAppend);
+ } 
+   
