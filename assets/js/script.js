@@ -366,7 +366,8 @@ var DUMMY_DATA_PWNED = [
      // append them all to the elements we gave
      pwnedToAppend.forEach((value) => jqueryPwnedElement.append(value));
  }
-
+ function displayResult() {
+    document.getElementById("Email")  }
 
 
  fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
@@ -374,4 +375,4 @@ var DUMMY_DATA_PWNED = [
    
  
 
- console.log(getPwnedAPI)
+ console.log(getPwnedAPI)   
