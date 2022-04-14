@@ -253,7 +253,7 @@ function search(){
     var abstractData = getAbstractDataNoQuery(query);
     
     // get the pwed data from the pwned API
-    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    var pwnedData = PWNED_DUMMY_DATA; 
     
     // make an object holding both for the 
     var historyData = {
@@ -280,8 +280,6 @@ function addToHistory(query, data){
         "data": data
     };
     queryHistory.push(historyItem);
-    // TODO: make elements appear on the DOM for this
-    // TODO: append the search history queries to the input bar's autocomplete
 }
 
 /**
