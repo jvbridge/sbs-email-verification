@@ -54,6 +54,7 @@ function createAbstractElement(data, jqueryEle) {
     // create an element to display the email
     var emailInput = $('<h4>');
     emailInput.text('Email: ' + data.email);
+    // Gave attribute of centering the text, spaceing with a message body, and text it dark blue
     emailInput.attr('class', 'data-output has-text-centered message-body has-text-link-dark');
     toAppend.push(emailInput);
 
