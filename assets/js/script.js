@@ -55,49 +55,49 @@ function createAbstractElement(data, jqueryEle) {
     var emailInput = $('<h4>');
     emailInput.text('Email: ' + data.email);
     // Gave attribute of centering the text, spaceing with a card body, and text it dark blue
-    emailInput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    emailInput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(emailInput);
 
     // create an element to show if the email is deliverable to
     var deliverabilityOutput = $('<h4>');
     deliverabilityOutput.text('Deliverability: ' + data.deliverability);
-    deliverabilityOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    deliverabilityOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(deliverabilityOutput);
 
     // create an element to show the quality score
     var qualityScoreOutput = $('<h4>');
     qualityScoreOutput.text('Quality score: ' + data.qualityScore);
-    qualityScoreOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    qualityScoreOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(qualityScoreOutput);
 
     // create an element to show if it's a free email
     var isFreeEmail = $('<h4>');
     isFreeEmail.text("From Abstract's list of free email providers: " + data.is_free_email.text);
-    isFreeEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    isFreeEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(isFreeEmail);
 
     // create an element to show if it's a disposable email
     var isDisposableEmail = $('<h4>');
     isDisposableEmail.text("From Abstract's list of disposable email providers: " + data.is_disposable_email.text);
-    isDisposableEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    isDisposableEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(isDisposableEmail);
 
     // create an element to show if the email is a person or a role
     var isRoleEmail = $('<h4>');
     isRoleEmail.text("Email for role rather than individual: " + data.is_role_email.text);
-    isRoleEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    isRoleEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(isRoleEmail);
 
     // create an element to show if the email is a "catch all" one for its domain
     var isCatchallEmail = $('<h4>');
     isCatchallEmail.text("Email is a catchall for its domain: " + data.is_catchall_email.text);
-    isCatchallEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    isCatchallEmail.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(isCatchallEmail);
 
     // create an element to show if the email has SMTP
     var isSmtpValid = $('<h4>');
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
-    isSmtpValid.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace');
+    isSmtpValid.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white');
     toAppend.push(isSmtpValid);
     
     // append them all to the element we gave
