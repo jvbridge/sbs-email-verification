@@ -150,6 +150,7 @@ document.addEventListener("click", function(event) {
     }
 });
 
+// adds the event listener for the key down event
 document.addEventListener("keydown", (event) =>{
     if (event.key === "Enter" && ($("#email-input").is(":focus"))){
         userInput = formInput.value;
