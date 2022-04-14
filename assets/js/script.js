@@ -37,6 +37,12 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
  */
 var queryHistory = [];
 
+/**
+ * The key used for storing our history to local storage
+ * @type {string}
+ */
+const HISTORY_KEY = "history";
+
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
   * @param {object} abstractObject - the data object returned from the API call
@@ -244,6 +250,25 @@ function addToHistory(query, data){
         "query": query,
         "data": data
     };
+    queryHistory.push(historyItem);
     // TODO: make elements appear on the DOM for this
     // TODO: append the search history queries to the input bar's autocomplete
+}
+
+/**
+ * This function writes our history to local storage
+ */
+function storeHistory(){
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(queryHistory));
+}
+
+/**
+ * This function retrieves our history from local storage
+ */
+function retrieveHistory(){
+    var data;
+    data = localStorage.getItem(HISTORY_KEY);
+    if (data){
+        queryHistory = JSON.parse(data);
+    }
 }
