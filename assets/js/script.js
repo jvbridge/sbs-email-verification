@@ -388,7 +388,8 @@ var DUMMY_DATA_PWNED = [
     titleContainer.append(title);
     
     var subtitle = $("<p class='subtitle is-6'>" + pwnedData.Domain+ "</p>");
-
+    titleContainer.append(subtitle);
+    
     // the description of what happened
     var blurb = $("<div class='content'>"+ pwnedData.Description+"</div>");
     cardContent.append(blurb);
