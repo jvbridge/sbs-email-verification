@@ -229,6 +229,9 @@ var PWNED_DUMMY_DATA = [
  * TODO: make work with asyncronous functions properly
  */
 function search(){
+
+    $("#output").empty();
+
     var formInput = $("#email-input");
     var query = formInput.val();
 
