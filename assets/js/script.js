@@ -144,8 +144,7 @@ async function getAbstractData() {
             // get a reference to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
-        });
-        
+        });  
 }
 
 /**
@@ -221,6 +220,9 @@ var PWNED_DUMMY_DATA = [
  * TODO: make work with asyncronous functions properly
  */
 function search(){
+
+    $("#output").empty();
+
     var formInput = $("#email-input");
     var query = formInput.val();
 
