@@ -17,7 +17,31 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
  * A nice use of our dummy data here
  * This is UGLY in the future we'll pull it from the .json file directly
  */
- const DUMMY_DATA = {"email":"jkwalsh127@gmail.com","autocorrect":"","deliverability":"DELIVERABLE","quality_score":"0.70","is_valid_format":{"value":true,"text":"TRUE"},"is_free_email":{"value":true,"text":"TRUE"},"is_disposable_email":{"value":false,"text":"FALSE"},"is_role_email":{"value":false,"text":"FALSE"},"is_catchall_email":{"value":false,"text":"FALSE"},"is_mx_found":{"value":true,"text":"TRUE"},"is_smtp_valid":{"value":true,"text":"TRUE"}};
+ const ABSTRACT_DUMMY_DATA = {
+    "email": "jkwalsh127@gmail.com",
+    "autocorrect": "",
+    "deliverability": "DELIVERABLE",
+    "quality_score": "0.70",
+    "is_valid_format": {"value": true, "text": "TRUE"},
+    "is_free_email": {"value": true, "text": "TRUE"},
+    "is_disposable_email": {"value": false, "text": "FALSE"},
+    "is_role_email": {"value": false, "text": "FALSE"},
+    "is_catchall_email": {"value": false, "text": "FALSE"},
+    "is_mx_found": {"value": true, "text": "TRUE"},
+    "is_smtp_valid": {"value": true, "text": "TRUE"}
+};
+
+/**
+ * @type {object[]} an array of query results from the api queries we have made
+ * used to store previous queries for ease of access as well as 
+ */
+var queryHistory = [];
+
+/**
+ * The key used for storing our history to local storage
+ * @type {string}
+ */
+const HISTORY_KEY = "history";
 
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
@@ -83,14 +107,17 @@ function createAbstractElement(data, jqueryEle) {
 /**
  * Makes the request to the Abstract API, stores data as object, and appends the
  * data to the DOM
+ * @returns {object} the data object gained from the API
+ * @returns {null} in the event that the query is not successful it returns null
  */
-function getAbstractData() {
+async function getAbstractData() {
     // Fetch data from the appropriate URL, applying the neccesasry API key and
     // user-submitted email as the variables key and userInput, respectively
     var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + userInput;
+    var returnedData;
 
     // main fetch
-    fetch(requestUrl)
+    returnedData = await fetch(requestUrl)
         .then(function (response) {
             // simply return the response of the server to the next promise
             return response.json();
@@ -103,97 +130,246 @@ function getAbstractData() {
                 console.log(data.autocorrect);
                 // sweetalert.js notification of the problem with a solution
                 swal("Error", "There was a typo detected. Maybe you meant" + data.autocorrect);
-                return;
+                return null;
             }
 
             // check if it's an invalid email format
             if (data.is_valid_format == false) {
                 // promt the user about the problem with sweetalert.js
                 swal("Error", "The email entered was not in a valid format. Please try again.");
-                return;
+                return null;
             }
 
             // get a reference to the output element to put the data on
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
         });
+        
 }
 
 /**
- * @param {function} getAbstractDataNoQuery - this is a copy of the getAbstractData fxn that will append dummy output to html doc, thereby avoiding unnecessary queries during testing
+ * this is a copy of the getAbstractData fxn that will append dummy output to 
+ * html doc, thereby avoiding unnecessary queries during testing
+ * @param {string} userInput - kept in place to make ease of switching the 
+ * function when this comes back around
+ * @returns {object} the dummy data
  */
 function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
-    createAbstractElement(DUMMY_DATA, outputEl);
+    createAbstractElement(ABSTRACT_DUMMY_DATA, outputEl);
     console.log(userInput);
+    return ABSTRACT_DUMMY_DATA;
 }
 
-getAbstractDataNoQuery();
-
-
- 
+// adds the event listener for the email button 
 document.addEventListener("click", function(event) {
     if (event.target.matches("#email-btn")) {
-        var formInput = document.querySelector("#email-input")
-        userInput = formInput.value;
-        console.log(userInput);
-        getAbstractDataNoQuery(userInput);
+        search();
     }
 });
+
+document.addEventListener("keydown", (event) =>{
+    if (event.key === "Enter" && ($("#email-input").is(":focus"))){
+        search();
+    }
+});
+
+/**
+ * A dummy query for the have I been pwned API
+ */
+var PWNED_DUMMY_DATA = [
+    {
+    "Name":"Adobe",
+    "Title":"Adobe",
+    "Domain":"adobe.com",
+    "BreachDate":"2013-10-04",
+    "AddedDate":"2013-12-04T00:00Z",
+    "ModifiedDate":"2013-12-04T00:00Z",
+    "PwnCount":152445165,
+    "Description":"In October 2013, 153 million Adobe accounts were breached with each containing an internal ID, username, email, <em>encrypted</em> password and a password hint in plain text. The password cryptography was poorly done and <a href=\"http://stricture-group.com/files/adobe-top100.txt\" target=\"_blank\" rel=\"noopener\">many were quickly resolved back to plain text</a>. The unencrypted hints also <a href=\"http://www.troyhunt.com/2013/11/adobe-credentials-and-serious.html\" target=\"_blank\" rel=\"noopener\">disclosed much about the passwords</a> adding further to the risk that hundreds of millions of Adobe customers already faced.",
+    "DataClasses":["Email addresses","Password hints","Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/Adobe.png"
+    },
+    {
+    "Name":"BattlefieldHeroes",
+    "Title":"Battlefield Heroes",
+    "Domain":"battlefieldheroes.com",
+    "BreachDate":"2011-06-26",
+    "AddedDate":"2014-01-23T13:10Z",
+    "ModifiedDate":"2014-01-23T13:10Z",
+    "PwnCount":530270,
+    "Description":"In June 2011 as part of a final breached data dump, the hacker collective &quot;LulzSec&quot; <a href=\"http://www.rockpapershotgun.com/2011/06/26/lulzsec-over-release-battlefield-heroes-data\" target=\"_blank\" rel=\"noopener\">obtained and released over half a million usernames and passwords from the game Battlefield Heroes</a>. The passwords were stored as MD5 hashes with no salt and many were easily converted back to their plain text versions.",
+    "DataClasses":["Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
+    }
+];
+
+/**
+ * This is the main search function to be used in the web app it will grab the
+ * query on its own and send it to the appropriate functions
+ * TODO: make work with asyncronous functions properly
+ */
+function search(){
+    var formInput = $("#email-input");
+    var query = formInput.val();
+    console.log(query);
+
+    // get the abstract data from the abastract data UI
+    var abstractData = getAbstractDataNoQuery(query);
+    
+    // get the pwed data from the pwned API
+    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    
+    // make an object holding both for the 
+    var historyData = {
+        "abstractData":abstractData,
+        "pwnedData": pwnedData
+    };
+
+    // add it to our history
+    addToHistory(query, historyData);
+}
+
+/**
+ * Appends what we were doing to the history 
+ * @param {string} query the user's query that caused this history item
+ * @param {*} data the resulting history item from said query
+ */
+function addToHistory(query, data){
+    var historyItem = {
+        "query": query,
+        "data": data
+    };
+    queryHistory.push(historyItem);
+    // TODO: make elements appear on the DOM for this
+    // TODO: append the search history queries to the input bar's autocomplete
+}
+
+/**
+ * Writes our history to local storage
+ */
+function storeHistory(){
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(queryHistory));
+}
+
+/**
+ * Rretrieves our history from local storage
+ */
+function retrieveHistory(){
+    var data;
+    data = localStorage.getItem(HISTORY_KEY);
+    if (data){
+        queryHistory = JSON.parse(data);
+    }
+}
+
 
 
 
 /**
  * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
  */
-const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/"
+ const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/"
 
-/** 
- * @type {string} userInput - default email to avoid unnecessary API queries
- */
-var userAccount = 'juliuscanales118@gmail.com';
-
-/**
- *  @type {string} key - API key for PWNED
- */
- var pwnedKey = 'NaN';
-
-
-// Requesting data from the API
- function getPwnedAPI() {
-    var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount
-    fetch(requestPwnedURL)
-      .then(function (response) {
-        return response.json();
-      })
-
-      .then(function (pwnedData) {
-        console.log(pwnedData);
-        // Getting an output to then append in an element for pwned
-          var pwnedOutput = $('#output');
-            createPwnedElement(pwnedData, pwnedOutput);
-        }
-      );
-}
-
-const DUMMY_DATA_PWNED = {"placeholder":1};
-
- /**
-  * Creates an object to add to the DOM, and appends it to the jquery element
-  * @param {object} pwnedObject - the data object returned from the API call
-  * @param {object} jqueryPwnedElement - the jquery element to append this to
+ /** 
+  * @type {string} userInput - default email to avoid unnecessary API queries
   */
-function createPwnedElement (pwnedData, jqueryPwnedElement) {
-    var pwnedToAppend = $('<div></div>');
-    // create an element to display the email
-    var pwnedEmailInput = $('<div>pwned-email-input</div>');
-    pwnedEmailInput.text('Email: ' + pwnedData.email);
-    pwnedEmailInput.attr('class', 'data-output');
-    pwnedToAppend.push(pwnedEmailInput);
-    // append them all to the elements we gave
-    pwnedToAppend.forEach((value) => jqueryPwnedElement.append(value));
-}
-  
-fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
-  
-  
+ var userAccount = 'juliuscanales118@gmail.com';
+ 
+ /**
+  *  @type {string} key - API key for PWNED
+  */
+  var pwnedKey = 'NaN';
+ 
+ 
+ // Requesting data from the API
+  function getPwnedAPI() {
+     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount
+     fetch(requestPwnedURL)
+       .then(function (response) {
+         return response.json();
+       })
+ 
+       .then(function (pwnedData) {
+         console.log(pwnedData);
+         // Getting an output to then append in an element for pwned
+           var pwnedOutput = $('#output');
+             createPwnedElement(pwnedData, pwnedOutput);
+         }
+       );
+ }
+ 
+ /**
+ * A dummy query for the have I been pwned API
+ */
+var DUMMY_DATA_PWNED = [
+    {
+    "Name":"Adobe",
+    "Title":"Adobe",
+    "Domain":"adobe.com",
+    "BreachDate":"2013-10-04",
+    "AddedDate":"2013-12-04T00:00Z",
+    "ModifiedDate":"2013-12-04T00:00Z",
+    "PwnCount":152445165,
+    "Description":"In October 2013, 153 million Adobe accounts were breached with each containing an internal ID, username, email, <em>encrypted</em> password and a password hint in plain text. The password cryptography was poorly done and <a href=\"http://stricture-group.com/files/adobe-top100.txt\" target=\"_blank\" rel=\"noopener\">many were quickly resolved back to plain text</a>. The unencrypted hints also <a href=\"http://www.troyhunt.com/2013/11/adobe-credentials-and-serious.html\" target=\"_blank\" rel=\"noopener\">disclosed much about the passwords</a> adding further to the risk that hundreds of millions of Adobe customers already faced.",
+    "DataClasses":["Email addresses","Password hints","Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/Adobe.png"
+    },
+    {
+    "Name":"BattlefieldHeroes",
+    "Title":"Battlefield Heroes",
+    "Domain":"battlefieldheroes.com",
+    "BreachDate":"2011-06-26",
+    "AddedDate":"2014-01-23T13:10Z",
+    "ModifiedDate":"2014-01-23T13:10Z",
+    "PwnCount":530270,
+    "Description":"In June 2011 as part of a final breached data dump, the hacker collective &quot;LulzSec&quot; <a href=\"http://www.rockpapershotgun.com/2011/06/26/lulzsec-over-release-battlefield-heroes-data\" target=\"_blank\" rel=\"noopener\">obtained and released over half a million usernames and passwords from the game Battlefield Heroes</a>. The passwords were stored as MD5 hashes with no salt and many were easily converted back to their plain text versions.",
+    "DataClasses":["Passwords","Usernames"],
+    "IsVerified":true,
+    "IsFabricated":false,
+    "IsSensitive":false,
+    "IsRetired":false,
+    "IsSpamList":false,
+    "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
+    }
+];
+ 
+
+
+  /**
+   * Creates an object to add to the DOM, and appends it to the jquery element
+   * @param {object} pwnedObject - the data object returned from the API call
+   * @param {object} jqueryPwnedElement - the jquery element to append this to
+   */
+ function createPwnedElement (pwnedData, jqueryPwnedElement) {
+     var pwnedToAppend = $('<div></div>');
+     // create an element to display the email
+     var pwnedEmailInput = $('<div>pwned-email-input</div>');
+     pwnedEmailInput.text('Email: ' + pwnedData.email);
+     pwnedEmailInput.attr('class', 'data-output');
+     pwnedToAppend.push(pwnedEmailInput);
+     // append them all to the elements we gave
+     pwnedToAppend.forEach((value) => jqueryPwnedElement.append(value));
+ }
+   
+ fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
+   
+   
+ 
+
+ console.log(getPwnedAPI)
