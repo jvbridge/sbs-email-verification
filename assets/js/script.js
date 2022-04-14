@@ -235,7 +235,7 @@ var PWNED_DUMMY_DATA = [
  */
 function search(){
 
-    outputEle.empty();
+    clearOutput();
 
     var formInput = $("#email-input");
     var query = formInput.val();
