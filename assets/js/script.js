@@ -50,6 +50,11 @@ var queryHistory = [];
  */
 const HISTORY_KEY = "history";
 
+/**
+ * A reference to the jquery object for the output
+ */
+var outputEle = $("#output");
+
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
   * @param {object} abstractObject - the data object returned from the API call
@@ -230,7 +235,7 @@ var PWNED_DUMMY_DATA = [
  */
 function search(){
 
-    $("#output").empty();
+    outputEle.empty();
 
     var formInput = $("#email-input");
     var query = formInput.val();
@@ -260,7 +265,7 @@ function search(){
     addToHistory(query, historyData);
 
     // make pwned elements for each one
-    pwnedData.forEach((value) => createPwnedElement(value,$("#output")));
+    pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
 }
 
@@ -444,5 +449,5 @@ function isValid(input){
  * Clears all of the output from the last API query
  */
 function clearOutput(){
-    $("#output").empty();
+    outputEle.empty();
 }
