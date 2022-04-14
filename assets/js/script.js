@@ -470,3 +470,6 @@ function clearOutput(){
 function readHistory(){
 
 }
+
+// Everything is defined we just need to get the history when we do run this
+retrieveHistory();
