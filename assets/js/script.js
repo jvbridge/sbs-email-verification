@@ -356,17 +356,19 @@ var DUMMY_DATA_PWNED = [
    * @param {object} pwnedObject - the data object returned from the API call
    * @param {object} jqueryPwnedElement - the jquery element to append this to
    */
- function createPwnedElement (pwnedData, jqueryPwnedElement) {
-     var pwnedToAppend = $('<div></div>');
+ function createPwnedElement (pwnedObject, jqueryPwnedElement) {
+     var pwnedToAppend = $('append-pwned');
      // create an element to display the email
-     var pwnedEmailInput = $('<div>pwned-email-input</div>');
-     pwnedEmailInput.text('Email: ' + pwnedData.email);
-     pwnedEmailInput.attr('class', 'data-output');
+     var pwnedEmailInput = $('pwned-email-input');
+     pwnedEmailInput.text('Email: ' + pwnedObject.email);
+     pwnedEmailInput.attr('pwned-class', 'pwned-data-output');
      pwnedToAppend.push(pwnedEmailInput);
      // append them all to the elements we gave
      pwnedToAppend.forEach((value) => jqueryPwnedElement.append(value));
  }
-   
+
+
+
  fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
    
    
