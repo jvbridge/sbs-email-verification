@@ -29,7 +29,7 @@ the results will be displayed on the page.
 
 ## Credits
 
-Programmars: 
+Programmers: 
 
 Jonathan Bridge: http://github.com/jvbridge
 
