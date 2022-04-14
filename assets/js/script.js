@@ -451,3 +451,10 @@ function isValid(input){
 function clearOutput(){
     outputEle.empty();
 }
+
+/**
+ * Reads through the history and updates the approrpriate variables
+ */
+function readHistory(){
+
+}
