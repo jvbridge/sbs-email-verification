@@ -348,8 +348,6 @@ var DUMMY_DATA_PWNED = [
     "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
     }
 ];
- 
-
 
   /**
    * Creates an object to add to the DOM, and appends it to the jquery element
@@ -357,19 +355,58 @@ var DUMMY_DATA_PWNED = [
    * @param {object} jqueryPwnedElement - the jquery element to append this to
    */
  function createPwnedElement (pwnedData, jqueryPwnedElement) {
-     var pwnedToAppend = $('<div></div>');
-     // create an element to display the email
-     var pwnedEmailInput = $('<div>pwned-email-input</div>');
-     pwnedEmailInput.text('Email: ' + pwnedData.email);
-     pwnedEmailInput.attr('class', 'data-output');
-     pwnedToAppend.push(pwnedEmailInput);
-     // append them all to the elements we gave
-     pwnedToAppend.forEach((value) => jqueryPwnedElement.append(value));
- }
-   
- fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
-   
-   
- 
+    /* this was made using the example code given by bulma, and putting the api
+     dummy output on it */
+    
+    // outer card 
+    var pwnedToAppend = $('<div class="card mb-3"></div>');
+    // inner card
+    var cardContent = $("<div class='card-content'></div>");
+    pwnedToAppend.append(cardContent);
 
- console.log(getPwnedAPI)
+    // these all make the image on the left of the card
+    var mediaContainer = $("<div class='media'></div>");
+    cardContent.append(mediaContainer);
+    
+    var mediaLeft = $("<div class='media-left'></div>");
+    mediaContainer.append(mediaLeft);
+
+    var figure = $("<figure class='image is-48x48'></figure>");
+    mediaLeft.append(figure);
+
+    // our actual image
+    var imageLeft = $("<img />");
+    imageLeft.attr("src", pwnedData.LogoPath);
+    imageLeft.attr("alt", pwnedData.Title);
+    figure.append(imageLeft);
+
+    // title 
+    var titleContainer = $("<div class='media-content></div>");
+    mediaContainer.append(titleContainer);
+
+    var title = $("<p class='title is-4'>" + pwnedData.title + "</p>");
+    titleContainer.append(title);
+    
+    var subtitle = $("<p class='subtitle is-6'>" + pwnedData.Domain+ "</p>");
+
+    // the description of what happened
+    var blurb = $("<div class='content'>"+ pwnedData.Description+"</div>");
+    cardContent.append(blurb);
+
+    blurb.append($("<br />"));
+
+    blurb.append($("<time datetime='" + pwnedData.BreachDate + "'></time>"));
+
+     // create an element to display the email
+    //  var pwnedEmailInput = $('<div>pwned-email-input</div>');
+    //  pwnedEmailInput.text('Email: ' + pwnedData.email);
+    //  pwnedEmailInput.attr('class', 'data-output');
+    //  pwnedToAppend.push(pwnedEmailInput);
+     // append them all to the elements we gave
+
+    jqueryPwnedElement.append(pwnedToAppend);
+ } 
+
+ // to be removed before merge
+ createPwnedElement(PWNED_DUMMY_DATA[0], $("#output"));
+   
