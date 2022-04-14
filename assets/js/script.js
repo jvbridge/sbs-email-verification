@@ -140,9 +140,18 @@ function getAbstractDataNoQuery(userInput) {
     console.log(userInput);
 }
 
+// adds the event listener for the email button 
 document.addEventListener("click", function(event) {
     if (event.target.matches("#email-btn")) {
-        var formInput = document.querySelector("#email-input")
+        var formInput = document.querySelector("#email-input");
+        userInput = formInput.value;
+        console.log(userInput);
+        getAbstractDataNoQuery(userInput);
+    }
+});
+
+document.addEventListener("keydown", (event) =>{
+    if (event.key === "Enter" && ($("#email-input").is(":focus"))){
         userInput = formInput.value;
         console.log(userInput);
         getAbstractDataNoQuery(userInput);
