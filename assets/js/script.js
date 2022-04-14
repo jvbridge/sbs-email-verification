@@ -30,49 +30,49 @@ function createAbstractElement(data, jqueryEle) {
     // create an element to display the email
     var emailInput = $('<h4>');
     emailInput.text('Email: ' + data.email);
-    emailInput.attr('class', 'data-output has-text-centered');
+    emailInput.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(emailInput);
 
     // create an element to show if the email is deliverable to
     var deliverabilityOutput = $('<h4>');
     deliverabilityOutput.text('Deliverability: ' + data.deliverability);
-    deliverabilityOutput.attr('class', 'data-output has-text-centered');
+    deliverabilityOutput.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(deliverabilityOutput);
 
     // create an element to show the quality score
     var qualityScoreOutput = $('<h4>');
     qualityScoreOutput.text('Quality score: ' + data.qualityScore);
-    qualityScoreOutput.attr('class', 'data-output has-text-centered');
+    qualityScoreOutput.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(qualityScoreOutput);
 
     // create an element to show if it's a free email
     var isFreeEmail = $('<h4>');
     isFreeEmail.text("From Abstract's list of free email providers: " + data.is_free_email.text);
-    isFreeEmail.attr('class', 'data-output has-text-centered');
+    isFreeEmail.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(isFreeEmail);
 
     // create an element to show if it's a disposable email
     var isDisposableEmail = $('<h4>');
     isDisposableEmail.text("From Abstract's list of disposable email providers: " + data.is_disposable_email.text);
-    isDisposableEmail.attr('class', 'data-output has-text-centered');
+    isDisposableEmail.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(isDisposableEmail);
 
     // create an element to show if the email is a person or a role
     var isRoleEmail = $('<h4>');
     isRoleEmail.text("Email for role rather than individual: " + data.is_role_email.text);
-    isRoleEmail.attr('class', 'data-output has-text-centered');
+    isRoleEmail.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(isRoleEmail);
 
     // create an element to show if the email is a "catch all" one for its domain
     var isCatchallEmail = $('<h4>');
     isCatchallEmail.text("Email is a catchall for its domain: " + data.is_catchall_email.text);
-    isCatchallEmail.attr('class', 'data-output has-text-centered');
+    isCatchallEmail.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(isCatchallEmail);
 
     // create an element to show if the email has SMTP
     var isSmtpValid = $('<h4>');
     isSmtpValid.text("Email SMTP check: " + data.is_smtp_valid.text);
-    isSmtpValid.attr('class', 'data-output has-text-centered');
+    isSmtpValid.attr('class', 'data-output has-text-centered message-body');
     toAppend.push(isSmtpValid);
     
     // append them all to the element we gave
