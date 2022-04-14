@@ -159,7 +159,8 @@ var userAccount = 'juliuscanales118@gmail.com';
  var pwnedKey = 'NaN';
 
 
-function getPwnedAPI() {
+// Requesting data from the API
+ function getPwnedAPI() {
     let requestURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount
     fetch(requestURL)
       .then(function (response) {
@@ -168,13 +169,33 @@ function getPwnedAPI() {
 
       .then(function (pwnedData) {
         console.log(pwnedData);
-        // getting an output to then append in an element for pwned
+        // Getting an output to then append in an element for pwned
           var pwnedOutput = $('#output');
             createPwnedElement(pwnedData, pwnedOutput);
         }
       );
   }
+
+ const DUMMY_DATA_PWNED = {"email":"jkwalsh127@gmail.com","autocorrect":"","deliverability":"DELIVERABLE","quality_score":"0.70","is_valid_format":{"value":true,"text":"TRUE"},"is_free_email":{"value":true,"text":"TRUE"},"is_disposable_email":{"value":false,"text":"FALSE"},"is_role_email":{"value":false,"text":"FALSE"},"is_catchall_email":{"value":false,"text":"FALSE"},"is_mx_found":{"value":true,"text":"TRUE"},"is_smtp_valid":{"value":true,"text":"TRUE"}};
+
+ /**
+  * Creates an object to add to the DOM, and appends it to the jquery element
+  * @param {object} pwnedObject - the data object returned from the API call
+  * @param {object} jqueryPwnedElement - the jquery element to append this to
+  */
+function createPwnedElement(data, jqueryEle) {
+    var pwnedToAppend = [];
+//HERE!!!
+    // create an element to display the email
+    var pwnedEmailInput = $('<h4>');
+    pwnedEmailInput.text('Email: ' + data.email);
+    pwnedEmailInput.attr('class', 'data-output');
+    pwnedToAppend.push(pwnedEmailInput);
+    
+    // append them all to the element we gave
+    toAppend.forEach((value) => jqueryEle.append(value));
+}
   
-  fetchButton.addEventListener('click', getApi);
+  fetchButton.addEventListener('click', getAbstractData, getPwnedAPI);
   
   
