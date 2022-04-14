@@ -220,5 +220,30 @@ function search(){
 
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
-    var pwnedData = PWNED_DUMMY_DATA;
+    
+    // get the pwed data from the pwned API
+    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    
+    // make an object holding both for the 
+    var historyData = {
+        "abstractData":abstractData,
+        "pwnedData": pwnedData
+    };
+
+    // add it to our history
+    addToHistory(query, historyData);
+}
+
+/**
+ * This function appends what we were doing to the history 
+ * @param {string} query the user's query that caused this history item
+ * @param {*} data the resulting history item from said query
+ */
+function addToHistory(query, data){
+    var historyItem = {
+        "query": query,
+        "data": data
+    };
+    // TODO: make elements appear on the DOM for this
+    // TODO: append the search history queries to the input bar's autocomplete
 }
