@@ -3,11 +3,9 @@ body{
   background-size: cover;
   font-family: 'Trebuchet MS', sans-serif; 
 }
-
-.container {
+.train-of-thought{
   display: inline-block;
 }
-
 .typed-out{
   overflow: hidden;
   border-right: .15em solid orange;
@@ -16,15 +14,13 @@ body{
   font-size: 1.6rem;
   width: 0;
 }
-
 /* animation for typing */
 @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-
+  from { width: 0 }
+  to { width: 100% }
+}
 /* animation for the blinking cursor */
-@keyframes blink {
-    from { border-color: transparent }
-    to { border-color: orange; }
-  }
+@keyframes blinking {
+  from { border-color: transparent }
+  to { border-color: orange; }
+}

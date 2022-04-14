@@ -116,6 +116,7 @@ async function getAbstractData() {
     // user-submitted email as the variables key and userInput, respectively
     var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + userInput;
     var returnedData;
+    //write function here that swaps in elements
 
     // main fetch
     returnedData = await fetch(requestUrl)
