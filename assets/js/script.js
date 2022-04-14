@@ -241,7 +241,7 @@ function search(){
 }
 
 /**
- * This function appends what we were doing to the history 
+ * Appends what we were doing to the history 
  * @param {string} query the user's query that caused this history item
  * @param {*} data the resulting history item from said query
  */
@@ -256,14 +256,14 @@ function addToHistory(query, data){
 }
 
 /**
- * This function writes our history to local storage
+ * Writes our history to local storage
  */
 function storeHistory(){
     localStorage.setItem(HISTORY_KEY, JSON.stringify(queryHistory));
 }
 
 /**
- * This function retrieves our history from local storage
+ * Rretrieves our history from local storage
  */
 function retrieveHistory(){
     var data;
