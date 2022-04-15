@@ -62,7 +62,7 @@ var outputEle = $("#output");
   */
 function createAbstractElement(data, jqueryEle) {
     var toAppend = [];
-
+    console.log("making abstract element: ");
     // create an element to display the email
     var emailInput = $('<h4>');
     emailInput.text('Email: ' + data.email);
@@ -112,6 +112,8 @@ function createAbstractElement(data, jqueryEle) {
     isSmtpValid.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(isSmtpValid);
     
+    console.log("appending information: ", toAppend);
+    console.log("appending to: ", jqueryEle);
     // append them all to the element we gave
     toAppend.forEach((value) => jqueryEle.append(value));
 }
@@ -299,6 +301,8 @@ async function search(){
     
     // add the history to local storage
     storeHistory();
+    // make an abstract element for it
+    createAbstractElement(abstractData, outputEle);
     // make pwned elements for each one
     pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
