@@ -130,8 +130,6 @@ async function getAbstractData() {
     var returnedData;
     //write function here that swaps in elements
 
-    // Write function here that will change words in the animation.
-
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
@@ -271,7 +269,7 @@ function search(){
 
     // Start animation here.
     function animation() {
-        $(".animation-element-1")
+        $(".typedout2").replaceWith("<div class='typed-out2' id='terminal-text'>Email Received!</div>");
     }
 
     // get the abstract data from the abastract data UI
