@@ -32,6 +32,13 @@ var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
 };
 
 /**
+ * This is the regex we use to match with emails it is long and complicated
+ * solution found at:
+ * https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+ */
+const EMAIL_REGEX = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+/**
  * @type {object[]} an array of query results from the api queries we have made
  * used to store previous queries for ease of access as well as 
  */
@@ -42,6 +49,11 @@ var queryHistory = [];
  * @type {string}
  */
 const HISTORY_KEY = "history";
+
+/**
+ * A reference to the jquery object for the output
+ */
+var outputEle = $("#output");
 
  /**
   * Creates an object to add to the DOM, and appends it to the jquery element
@@ -120,11 +132,19 @@ async function getAbstractData() {
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
+            // if the response was not okay use the dummy data
+            if (!response.ok){
+                var responseStr = "Response: " + response.status;
+                swol(
+                    "Error!", 
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead" + responseStr
+                );
+                return ABSTRACT_DUMMY_DATA;
+            }
             // simply return the response of the server to the next promise
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             // check if the abstract API detects a typo in the submission
             if (data.autocorrect !== "") {
@@ -145,7 +165,7 @@ async function getAbstractData() {
             var outputEl = $('#output');
             createAbstractElement(data, outputEl);
         });
-        
+    return returnedData;
 }
 
 /**
@@ -158,7 +178,6 @@ async function getAbstractData() {
 function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(ABSTRACT_DUMMY_DATA, outputEl);
-    console.log(userInput);
     return ABSTRACT_DUMMY_DATA;
 }
 
@@ -169,6 +188,7 @@ document.addEventListener("click", function(event) {
     }
 });
 
+// adds the event listener for the key down event
 document.addEventListener("keydown", (event) =>{
     if (event.key === "Enter" && ($("#email-input").is(":focus"))){
         search();
@@ -221,18 +241,36 @@ var PWNED_DUMMY_DATA = [
  * TODO: make work with asyncronous functions properly
  */
 function search(){
+
+    clearOutput();
+    // get the input from the form, make it all lower case
     var formInput = $("#email-input");
-    var query = formInput.val();
+    var query = formInput.val().toLowerCase();
+
+    // validate our input to see if it's good
+    if (!isValid(query)){
+        swal("Error", "Looks like that's not an email address!");
+        return;
+    }
 
     // empty the input 
     formInput.val("");
-    console.log(query);
+
+    // check the history for previous queries
+    var hist = readHistory(query);
+    if(hist){
+        // found a previous query, lets use and and be done with it
+        swal("Success!", "Looks like you looked this up already, we will use your old data for this");
+        createAbstractElement(hist.data.abstractData, outputEle);
+        hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
+        return;
+    }
 
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
     
     // get the pwed data from the pwned API
-    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    var pwnedData = PWNED_DUMMY_DATA; 
     
     // make an object holding both for the 
     var historyData = {
@@ -242,16 +280,18 @@ function search(){
 
     // add it to our history
     addToHistory(query, historyData);
-
+    
+    // add the history to local storage
+    storeHistory();
     // make pwned elements for each one
-    pwnedData.forEach((value) => createPwnedElement(value,$("#output")));
+    pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
 }
 
 /**
  * Appends what we were doing to the history 
  * @param {string} query the user's query that caused this history item
- * @param {*} data the resulting history item from said query
+ * @param {object} data the resulting history item from said query
  */
 function addToHistory(query, data){
     var historyItem = {
@@ -259,8 +299,6 @@ function addToHistory(query, data){
         "data": data
     };
     queryHistory.push(historyItem);
-    // TODO: make elements appear on the DOM for this
-    // TODO: append the search history queries to the input bar's autocomplete
 }
 
 /**
@@ -280,9 +318,6 @@ function retrieveHistory(){
         queryHistory = JSON.parse(data);
     }
 }
-
-
-
 
 /**
  * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
@@ -309,7 +344,6 @@ function retrieveHistory(){
        })
  
        .then(function (pwnedData) {
-         console.log(pwnedData);
          // Getting an output to then append in an element for pwned
            var pwnedOutput = $('#output');
              createPwnedElement(pwnedData, pwnedOutput);
@@ -409,4 +443,45 @@ var DUMMY_DATA_PWNED = [
 
     jqueryPwnedElement.append(pwnedToAppend);
  } 
-   
+
+/**
+ * Checks if the input is okay to put through the 
+ * @param {string} input given 
+ * @returns {true} returned if the input is valid and should be sent to the API
+ * @returns {false} returned if the input is not valid and should not be sent
+ */
+function isValid(input){
+    var email = input.toLowerCase();
+    var match =  email.match(EMAIL_REGEX);
+    if (match){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Clears all of the output from the last API query
+ */
+function clearOutput(){
+    outputEle.empty();
+}
+
+/**
+ * Reads through the history and returns the first query that matches one in the
+ * history
+ * @param {string} query the query string we are searching for
+ * @returns {false} if there are no entries for the history
+ * @returns {object} the history object found
+ */
+function readHistory(query){
+    var ret = false;
+    queryHistory.forEach((value) =>{
+        if (value.query === query){
+            ret = value;
+        }
+    });
+    return ret;
+}
+
+// Everything is defined we just need to get the history when we do run this
+retrieveHistory();
