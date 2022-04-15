@@ -44,6 +44,8 @@ technologies used:
 * sweet alert https://sweetalert2.github.io/
 * have I been pwned API: https://haveibeenpwned.com/API/v3
 * abstract API email validation: https://www.abstractapi.com/email-verification-validation-api
+* typewriter animation effect guide: https://www.sitepoint.com/css-typewriter-effect/
+
 ## License
 
 MIT

@@ -131,6 +131,7 @@ async function getAbstractData(query) {
     console.log("getting abstract data with query: ", query);
     var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + query;
     var returnedData;
+    //write function here that swaps in elements
 
     // main fetch
     returnedData = await fetch(requestUrl)
@@ -256,18 +257,32 @@ async function search(){
         return;
     }
 
+    // Start animation here.
+    $("#terminal-text").attr("class","typed-out2");
+    $("#terminal-text").text("Email Received!");
+
+    setTimeout(insertFetchAnim, 2000);
+
+    function insertFetchAnim() {
+    var fetchAnim = 
+        "<div class='typed-out3'id='#terminal-text'>Fetching Data...</div> <div class='typed-out4'id='#terminal-text'>Retrieving...</div> <div class='typed-out5'id='#terminal-text'>Query Returned!!!</div>";
+        document.querySelector('#terminal-text').innerHTML = fetchAnim;
+    }
+    // End of animation here.
+
     // empty the input 
     formInput.val("");
 
     // check the history for previous queries
     var hist = readHistory(query);
     if(hist){
-        // found a previous query, lets use and and be done with it
-        swal("Success!", "Looks like you looked this up already, we will use your old data for this");
+        // found a previous query, lets use it and and be done with it
+        swal("Success!", "Looks like you looked this up already, we will use your old data for this!");
         createAbstractElement(hist.data.abstractData, outputEle);
         hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
         return;
     }
+    
 
     // get the abstract data from the abastract data UI
     var abstractData = await getAbstractData(query);
@@ -292,6 +307,8 @@ async function search(){
     pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
 }
+
+console.log(search)
 
 /**
  * Appends what we were doing to the history 
