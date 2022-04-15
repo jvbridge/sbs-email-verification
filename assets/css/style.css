@@ -68,6 +68,18 @@ header {
 
 /*  */
 /*  */
+/* animated terminal section */
+#terminal {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(35, 33, 40);
+    border: 2px solid gray;
+}
+/*  */
+/*  */
+
+/*  */
+/*  */
 /* section that contains the API requested data */
 #output {
     border: 1px solid black;
@@ -80,6 +92,8 @@ header {
 .data-output {
     font-size: 16px;
     color: black;
+    padding: 0;
+    background-color: rgb(229, 229, 229)!important;
 }
 /*  */
 /*  */
