@@ -1,0 +1,37 @@
+body{
+    background-size: cover;
+    font-family: 'Trebuchet MS', sans-serif; 
+  }
+  .train-of-thought{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .typed-out1{
+    overflow: hidden;
+    border-color: transparent;
+    border-right: .15em solid black;
+    white-space: nowrap;
+    animation: 
+    typing 1s steps(20, end) forwards;
+    font-size: 1.35rem!important;
+    width: 0;
+  }
+  .typed-out2{
+    overflow: hidden;
+    border-right: .15em solid black;
+    border-color: transparent;
+    white-space: nowrap;
+    animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
+    font-size: 1.7rem!important;
+    width: 0;
+  }
+  /* animation for typing */
+  @keyframes typing {
+    from { width: 0, }
+    to { width: 100%; border-color: #3e8ed0 }
+  }
+  /* animation for the blinking cursor */
+  @keyframes blinking {
+    from { border-color: transparent }
+    to { border-color: black; }
+  }
