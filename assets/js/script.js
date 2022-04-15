@@ -132,11 +132,19 @@ async function getAbstractData() {
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
+            // if the response was not okay use the dummy data
+            if (!response.ok){
+                var responseStr = "Response: " + response.status;
+                swol(
+                    "Error!", 
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead" + responseStr
+                );
+                return ABSTRACT_DUMMY_DATA;
+            }
             // simply return the response of the server to the next promise
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             // check if the abstract API detects a typo in the submission
             if (data.autocorrect !== "") {
@@ -170,7 +178,6 @@ async function getAbstractData() {
 function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(ABSTRACT_DUMMY_DATA, outputEl);
-    console.log(userInput);
     return ABSTRACT_DUMMY_DATA;
 }
 
@@ -236,9 +243,9 @@ var PWNED_DUMMY_DATA = [
 function search(){
 
     clearOutput();
-
+    // get the input from the form, make it all lower case
     var formInput = $("#email-input");
-    var query = formInput.val();
+    var query = formInput.val().toLowerCase();
 
     // validate our input to see if it's good
     if (!isValid(query)){
@@ -249,11 +256,21 @@ function search(){
     // empty the input 
     formInput.val("");
 
+    // check the history for previous queries
+    var hist = readHistory(query);
+    if(hist){
+        // found a previous query, lets use and and be done with it
+        swal("Success!", "Looks like you looked this up already, we will use your old data for this");
+        createAbstractElement(hist.data.abstractData, outputEle);
+        hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
+        return;
+    }
+
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
     
     // get the pwed data from the pwned API
-    var pwnedData = PWNED_DUMMY_DATA; // TODO: use the tiling function to make more elements for this
+    var pwnedData = PWNED_DUMMY_DATA; 
     
     // make an object holding both for the 
     var historyData = {
@@ -263,7 +280,9 @@ function search(){
 
     // add it to our history
     addToHistory(query, historyData);
-
+    
+    // add the history to local storage
+    storeHistory();
     // make pwned elements for each one
     pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
@@ -280,8 +299,6 @@ function addToHistory(query, data){
         "data": data
     };
     queryHistory.push(historyItem);
-    // TODO: make elements appear on the DOM for this
-    // TODO: append the search history queries to the input bar's autocomplete
 }
 
 /**
@@ -327,7 +344,6 @@ function retrieveHistory(){
        })
  
        .then(function (pwnedData) {
-         console.log(pwnedData);
          // Getting an output to then append in an element for pwned
            var pwnedOutput = $('#output');
              createPwnedElement(pwnedData, pwnedOutput);
@@ -437,8 +453,6 @@ var DUMMY_DATA_PWNED = [
 function isValid(input){
     var email = input.toLowerCase();
     var match =  email.match(EMAIL_REGEX);
-    console.log("validating: ", input);
-    console.log("matched: ", match);
     if (match){
         return true;
     }
@@ -453,8 +467,21 @@ function clearOutput(){
 }
 
 /**
- * Reads through the history and updates the approrpriate variables
+ * Reads through the history and returns the first query that matches one in the
+ * history
+ * @param {string} query the query string we are searching for
+ * @returns {false} if there are no entries for the history
+ * @returns {object} the history object found
  */
-function readHistory(){
-
+function readHistory(query){
+    var ret = false;
+    queryHistory.forEach((value) =>{
+        if (value.query === query){
+            ret = value;
+        }
+    });
+    return ret;
 }
+
+// Everything is defined we just need to get the history when we do run this
+retrieveHistory();
