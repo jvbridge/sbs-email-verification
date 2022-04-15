@@ -136,7 +136,6 @@ async function getAbstractData() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             // check if the abstract API detects a typo in the submission
             if (data.autocorrect !== "") {
@@ -170,7 +169,6 @@ async function getAbstractData() {
 function getAbstractDataNoQuery(userInput) {
     var outputEl = $('#output');
     createAbstractElement(ABSTRACT_DUMMY_DATA, outputEl);
-    console.log(userInput);
     return ABSTRACT_DUMMY_DATA;
 }
 
@@ -337,7 +335,6 @@ function retrieveHistory(){
        })
  
        .then(function (pwnedData) {
-         console.log(pwnedData);
          // Getting an output to then append in an element for pwned
            var pwnedOutput = $('#output');
              createPwnedElement(pwnedData, pwnedOutput);
@@ -447,8 +444,6 @@ var DUMMY_DATA_PWNED = [
 function isValid(input){
     var email = input.toLowerCase();
     var match =  email.match(EMAIL_REGEX);
-    console.log("validating: ", input);
-    console.log("matched: ", match);
     if (match){
         return true;
     }
@@ -470,11 +465,9 @@ function clearOutput(){
  * @returns {object} the history object found
  */
 function readHistory(query){
-    console.log("reading the history");
     var ret = false;
     queryHistory.forEach((value) =>{
         if (value.query === query){
-            console.log("Found a match: ", value);
             ret = value;
         }
     });
