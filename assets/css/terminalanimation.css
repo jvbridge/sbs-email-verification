@@ -1,28 +1,32 @@
 body{
     background-size: cover;
-    font-family: 'Trebuchet MS', sans-serif; 
   }
-  .train-of-thought{
+  .train-of-thought1{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .train-of-thought2{
     display: inline-block;
     margin-left: 10px;
   }
   .typed-out1{
     overflow: hidden;
     border-color: transparent;
-    border-right: .15em solid black;
+    color: white;
+    border-right: .15em solid white;
     white-space: nowrap;
-    animation: 
-    typing 1s steps(20, end) forwards;
-    font-size: 1.35rem!important;
+    animation: typing 1s steps(20, end) forwards;
+    font-size: 1.35rem;
     width: 0;
   }
   .typed-out2{
     overflow: hidden;
     border-right: .15em solid black;
     border-color: transparent;
+    color: black;
     white-space: nowrap;
     animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
-    font-size: 1.7rem!important;
+    font-size: 1.7rem;
     width: 0;
   }
   /* animation for typing */

@@ -74,6 +74,8 @@ header {
     height: 150px;
     background-color: #3e8ed0;
     border: 2px solid black;
+    display: flex;
+    flex-direction: column;
 }
 /*  */
 /*  */

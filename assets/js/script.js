@@ -254,6 +254,10 @@ function search(){
         return;
     }
 
+    // Start animation here.
+    $("#terminal-text").attr("class","typed-out2");
+    $("#terminal-text").text("Email Received!");
+
     // empty the input 
     formInput.val("");
 
@@ -266,11 +270,7 @@ function search(){
         hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
         return;
     }
-
-    // Start animation here.
-    function animation() {
-        $(".typedout2").replaceWith("<div class='typed-out2' id='terminal-text'>Email Received!</div>");
-    }
+    
 
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
@@ -295,6 +295,8 @@ function search(){
     pwnedData.forEach((value) => createPwnedElement(value,outputEle));
 
 }
+
+console.log(search)
 
 /**
  * Appends what we were doing to the history 
