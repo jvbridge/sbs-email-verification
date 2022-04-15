@@ -71,7 +71,7 @@ header {
 /* animated terminal section */
 #terminal {
     width: 100%;
-    height: 150px;
+    height: 160px;
     background-color: #3e8ed0;
     border: 2px solid black;
     display: flex;

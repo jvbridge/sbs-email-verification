@@ -25,7 +25,7 @@ body{
     border-right: .15em solid black;
     color: black;
     white-space: nowrap;
-    animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
+    animation: typing 1s steps(20, end) forwards, blinking .8s;
     font-size: 1.7rem;
     width: 260px!important;
   }
@@ -36,9 +36,8 @@ body{
     color: black;
     white-space: nowrap;
     animation: typing 1.5s steps(30, end) forwards;
-    animation-delay: 1.5s;
     font-size: 1.7rem;
-    width: 260px!important;
+    width: 190px!important;
   }
   /* For "Receiving... */
   .typed-out4{
@@ -47,9 +46,9 @@ body{
     color: black;
     white-space: nowrap;
     animation: typing 2s steps(30, end) forwards;
-    animation-delay: 3s;
+    animation-delay: 1.5s;
     font-size: 1.7rem;
-    width: 260px!important;
+    width: 145px!important;
   }
   /* For "Query Returned!" */
   .typed-out5{
@@ -58,9 +57,9 @@ body{
     color: black;
     white-space: nowrap;
     animation: typing 2s steps(30, end) forwards, blink .75s infinite;
-    animation-delay: 5.5s;
+    animation-delay: 3s;
     font-size: 1.7rem;
-    width: 260px!important;
+    width: 220px!important;
   }
 
   /* animation for typing */

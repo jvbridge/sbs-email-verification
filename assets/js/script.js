@@ -258,9 +258,14 @@ function search(){
     $("#terminal-text").attr("class","typed-out2");
     $("#terminal-text").text("Email Received!");
 
-    $("#terminal-text").attr("class","typed-out3");
-    $("#terminal-text").text("Fetching Data");
+    setTimeout(insertFetchAnim, 2000);
 
+    function insertFetchAnim() {
+    var fetchAnim = 
+        "<div class='typed-out3'id='#terminal-text'>Fetching Data...</div> <div class='typed-out4'id='#terminal-text'>Retrieving...</div> <div class='typed-out5'id='#terminal-text'>Query Returned!!!</div>";
+        document.querySelector('#terminal-text').innerHTML = fetchAnim;
+    }
+    // End of animation here.
 
     // empty the input 
     formInput.val("");
@@ -268,7 +273,7 @@ function search(){
     // check the history for previous queries
     var hist = readHistory(query);
     if(hist){
-        // found a previous query, lets use and and be done with itx
+        // found a previous query, lets use it and and be done with it
         swal("Success!", "Looks like you looked this up already, we will use your old data for this!");
         createAbstractElement(hist.data.abstractData, outputEle);
         hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
