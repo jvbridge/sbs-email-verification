@@ -250,16 +250,14 @@ function search(){
     formInput.val("");
 
     // check the history for previous queries
-    queryHistory.forEach((value) => {
-        // if we find one make tell the user and use the data
-        if(query=== value.query){
-            console.log("found a match, this is what we have", value);
-            swal("Success!", "Looks like you've searched this before, we will use the data we already have!");
-            createAbstractElement(value.data.abstractData, outputEle);
-            value.data.pwnedData.forEach((value) => createPwnedElement(value,outputEle));
-            return;
-        }
-    });
+    var hist = readHistory(query);
+    if(hist){
+        // found a previous query, lets use and and be done with it
+        swal("Success!", "Looks like you looked this up already, we will use your old data for this");
+        createAbstractElement(hist.data.abstractData, outputEle);
+        hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
+        return;
+    }
 
     // get the abstract data from the abastract data UI
     var abstractData = getAbstractDataNoQuery(query);
@@ -465,10 +463,22 @@ function clearOutput(){
 }
 
 /**
- * Reads through the history and updates the approrpriate variables
+ * Reads through the history and returns the first query that matches one in the
+ * history
+ * @param {string} query the query string we are searching for
+ * @returns {false} if there are no entries for the history
+ * @returns {object} the history object found
  */
-function readHistory(){
-
+function readHistory(query){
+    console.log("reading the history");
+    var ret = false;
+    queryHistory.forEach((value) =>{
+        if (value.query === query){
+            console.log("Found a match: ", value);
+            ret = value;
+        }
+    });
+    return ret;
 }
 
 // Everything is defined we just need to get the history when we do run this
