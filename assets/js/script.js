@@ -11,7 +11,7 @@ var userInput = 'jkwalsh127@gmail.com';
 /**
  *  @type {string} api key for Abstract
  */
-var key = 'b27bbe70118d43f5aa1bce1a9262ef17';
+var key = '558f0f10abe14655b9b28b49159392b1';
 
 /**
  * A nice use of our dummy data here
@@ -78,7 +78,7 @@ function createAbstractElement(data, jqueryEle) {
 
     // create an element to show the quality score
     var qualityScoreOutput = $('<h4>');
-    qualityScoreOutput.text('Quality score: ' + data.qualityScore);
+    qualityScoreOutput.text('Quality score: ' + data.quality_score);
     qualityScoreOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(qualityScoreOutput);
 
@@ -123,22 +123,23 @@ function createAbstractElement(data, jqueryEle) {
  * @returns {object} the data object gained from the API
  * @returns {null} in the event that the query is not successful it returns null
  */
-async function getAbstractData() {
+async function getAbstractData(query) {
     // Fetch data from the appropriate URL, applying the neccesasry API key and
     // user-submitted email as the variables key and userInput, respectively
-    var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + userInput;
+    console.log("getting abstract data with query: ", query);
+    var requestUrl = ABSTRACT_API_URL + "?api_key=" + key + '&email=' + query;
     var returnedData;
     //write function here that swaps in elements
 
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
-            // if the response was not okay use the dummy data
+            console.log("got a response: ", response);
             if (!response.ok){
                 var responseStr = "Response: " + response.status;
-                swol(
+                swal(
                     "Error!", 
-                    "Looks like we are having a hard time reaching the API lets use some dummy data instead" + responseStr
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead\n" + responseStr
                 );
                 return ABSTRACT_DUMMY_DATA;
             }
@@ -146,25 +147,25 @@ async function getAbstractData() {
             return response.json();
         })
         .then(function (data) {
-
+            console.log("we got this data: ", data);
             // check if the abstract API detects a typo in the submission
             if (data.autocorrect !== "") {
                 console.log(data.autocorrect);
                 // sweetalert.js notification of the problem with a solution
-                swal("Error", "There was a typo detected. Maybe you meant" + data.autocorrect);
-                return null;
+                swal("Error", "There was a typo detected. Maybe you meant" + 
+                    data.autocorrect + 
+                    ", in the mean time we will display dummy data" );
+                return ABSTRACT_DUMMY_DATA;
             }
 
             // check if it's an invalid email format
             if (data.is_valid_format == false) {
                 // promt the user about the problem with sweetalert.js
-                swal("Error", "The email entered was not in a valid format. Please try again.");
-                return null;
+                swal("Error", "The email entered was not in a valid format. Please try again. in the mean time we will display dummy data");
+                return ABSTRACT_DUMMY_DATA;
             }
 
-            // get a reference to the output element to put the data on
-            var outputEl = $('#output');
-            createAbstractElement(data, outputEl);
+            return data;
         });
     return returnedData;
 }
@@ -241,7 +242,7 @@ var PWNED_DUMMY_DATA = [
  * query on its own and send it to the appropriate functions
  * TODO: make work with asyncronous functions properly
  */
-function search(){
+async function search(){
 
     clearOutput();
     // get the input from the form, make it all lower case
@@ -282,13 +283,11 @@ function search(){
     
 
     // get the abstract data from the abastract data UI
-    var abstractData = getAbstractDataNoQuery(query);
+    var abstractData = await getAbstractData(query);
     
     // get the pwed data from the pwned API
-    var pwnedData = PWNED_DUMMY_DATA; 
-
-    // Finish animation here. 
-
+    var pwnedData = await getPwnedDataNoQuery(query); 
+    
     // make an object holding both for the 
     var historyData = {
         "abstractData":abstractData,
@@ -341,7 +340,7 @@ function retrieveHistory(){
 /**
  * @type {string} a reference to the HAVE_I_BEEN_PWNED API URL
  */
- const HAVE_I_BEEN_PWNED_URL ="https://haveibeenpwned.com/api/v3/breachedaccount/";
+ const HAVE_I_BEEN_PWNED_URL ="http://haveibeenpwned.com/api/v3/breachedaccount/";
 
  /** 
   * @type {string} userInput - default email to avoid unnecessary API queries
@@ -351,24 +350,54 @@ function retrieveHistory(){
  /**
   *  @type {string} key - API key for PWNED
   */
-  var pwnedKey = 'NaN';
+const PWNED_KEY = '168f3571c3ed46308d71ae3e158a2cc7';
  
  
- // Requesting data from the API
-  function getPwnedAPI() {
-     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount;
-     fetch(requestPwnedURL)
-       .then(function (response) {
-         return response.json();
-       })
- 
-       .then(function (pwnedData) {
-         // Getting an output to then append in an element for pwned
-           var pwnedOutput = $('#output');
-             createPwnedElement(pwnedData, pwnedOutput);
-         }
-       );
+ /**
+  * This function returns the information from the pwned API, or returns dummy 
+  * data if we can't get in contact with the server
+  * @param {string} query - the query string for the email to enter
+  * @returns {object} data we can use to append information to the DOM
+  */
+  async function getPwnedData(query) {
+    var requestPwnedURL = HAVE_I_BEEN_PWNED_URL + "jvbridge@gmail.com" + "?truncateResponse=false";
+    var header = new Headers();
+    header.append("hibp-api-key",PWNED_KEY);
+    console.log("made a header: ", header );
+    console.log("header has a value of: ", header.get("hibp-api-key"));
+    console.log("querying the pwned server with:", requestPwnedURL);
+    var data = await fetch(requestPwnedURL, {
+        mode: "no-cors",
+        headers: header
+    })
+        .then(function (response) {
+            var breakpoint = 0;
+            console.log("got a response: ", response);
+            // if we can't contact the server 
+            if (!response.ok){
+                console.log("bad response info: ", response.json());
+                var responseStr = "Response: " + response.message;
+                swal(
+                    "Error!", 
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead\n" + responseStr
+                );
+                return DUMMY_DATA_PWNED;
+            }
+            // return what we got
+            console.log("pwned response data: ", response.json());
+            return response.json();
+        });
+    return data;
  }
+
+ /**
+  * This is a placeholder for the function we will use when we want to start querying the API
+  * @param {*} query - placeholder for the real function when we impliment it
+  * @returns {object} - the dummy data we already have in the file
+  */
+function getPwnedDataNoQuery(query){
+    return DUMMY_DATA_PWNED;
+}
  
  /**
  * A dummy query for the have I been pwned API
@@ -409,6 +438,8 @@ var DUMMY_DATA_PWNED = [
     "LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/BattlefieldHeroes.png"
     }
 ];
+
+
 
   /**
    * Creates an object to add to the DOM, and appends it to the jquery element
