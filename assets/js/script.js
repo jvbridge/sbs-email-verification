@@ -258,13 +258,17 @@ function search(){
     $("#terminal-text").attr("class","typed-out2");
     $("#terminal-text").text("Email Received!");
 
+    $("#terminal-text").attr("class","typed-out3");
+    $("#terminal-text").text("Fetching Data");
+
+
     // empty the input 
     formInput.val("");
 
     // check the history for previous queries
     var hist = readHistory(query);
     if(hist){
-        // found a previous query, lets use and and be done with it
+        // found a previous query, lets use and and be done with itx
         swal("Success!", "Looks like you looked this up already, we will use your old data for this!");
         createAbstractElement(hist.data.abstractData, outputEle);
         hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));

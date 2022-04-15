@@ -11,7 +11,6 @@ body{
   }
   .typed-out1{
     overflow: hidden;
-    border-color: transparent;
     color: white;
     border-right: .15em solid white;
     white-space: nowrap;
@@ -22,12 +21,20 @@ body{
   .typed-out2{
     overflow: hidden;
     border-right: .15em solid black;
-    border-color: transparent;
     color: black;
     white-space: nowrap;
     animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
     font-size: 1.7rem;
-    width: 0;
+    width: 260px!important;
+  }
+  .typed-out3{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
+    font-size: 1.7rem;
+    width: 260px!important;
   }
   /* animation for typing */
   @keyframes typing {
