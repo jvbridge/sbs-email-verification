@@ -136,7 +136,7 @@ async function getAbstractData(query) {
             console.log("got a response: ", response);
             if (!response.ok){
                 var responseStr = "Response: " + response.status;
-                swol(
+                swal(
                     "Error!", 
                     "Looks like we are having a hard time reaching the API lets use some dummy data instead\n" + responseStr
                 );
