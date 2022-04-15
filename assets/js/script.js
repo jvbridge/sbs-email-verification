@@ -149,20 +149,20 @@ async function getAbstractData() {
             if (data.autocorrect !== "") {
                 console.log(data.autocorrect);
                 // sweetalert.js notification of the problem with a solution
-                swal("Error", "There was a typo detected. Maybe you meant" + data.autocorrect);
-                return null;
+                swal("Error", "There was a typo detected. Maybe you meant" + 
+                    data.autocorrect + 
+                    ", in the mean time we will display dummy data" );
+                return ABSTRACT_DUMMY_DATA;
             }
 
             // check if it's an invalid email format
             if (data.is_valid_format == false) {
                 // promt the user about the problem with sweetalert.js
-                swal("Error", "The email entered was not in a valid format. Please try again.");
-                return null;
+                swal("Error", "The email entered was not in a valid format. Please try again. in the mean time we will display dummy data");
+                return ABSTRACT_DUMMY_DATA;
             }
 
-            // get a reference to the output element to put the data on
-            var outputEl = $('#output');
-            createAbstractElement(data, outputEl);
+            return data;
         });
     return returnedData;
 }
@@ -269,7 +269,7 @@ function search(){
     var abstractData = getAbstractDataNoQuery(query);
     
     // get the pwed data from the pwned API
-    var pwnedData = PWNED_DUMMY_DATA; 
+    var pwnedData = getPwnedDataNoQuery(query); 
     
     // make an object holding both for the 
     var historyData = {
@@ -334,21 +334,39 @@ function retrieveHistory(){
   var pwnedKey = 'NaN';
  
  
- // Requesting data from the API
-  function getPwnedAPI() {
-     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + userAccount;
-     fetch(requestPwnedURL)
-       .then(function (response) {
-         return response.json();
-       })
- 
-       .then(function (pwnedData) {
-         // Getting an output to then append in an element for pwned
-           var pwnedOutput = $('#output');
-             createPwnedElement(pwnedData, pwnedOutput);
-         }
-       );
+ /**
+  * This function returns the information from the pwned API, or returns dummy 
+  * data if we can't get in contact with the server
+  * @param {string} query - the query string for the email to enter
+  * @returns {object} data we can use to append information to the DOM
+  */
+  async function getPwnedAPI(query) {
+     var requestPwnedURL = ABSTRACT_API_URL + "?api_key=" + pwnedKey + '&email=' + query;
+     
+    var data = await fetch(requestPwnedURL)
+        .then(function (response) {
+            // if we can't contct the server 
+            if (!response.ok){
+                var responseStr = "Response: " + response.status;
+                swol(
+                    "Error!", 
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead" + responseStr
+                );
+                return DUMMY_DATA_PWNED;
+            }
+        return response.json();
+       });
+    return data;
  }
+
+ /**
+  * This is a placeholder for the function we will use when we want to start querying the API
+  * @param {*} query - placeholder for the real function when we impliment it
+  * @returns {object} - the dummy data we already have in the file
+  */
+function getPwnedDataNoQuery(query){
+    return DUMMY_DATA_PWNED;
+}
  
  /**
  * A dummy query for the have I been pwned API
