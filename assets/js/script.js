@@ -132,6 +132,15 @@ async function getAbstractData() {
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
+            // if the response was not okay use the dummy data
+            if (!response.ok){
+                var responseStr = "Response: " + response.status;
+                swol(
+                    "Error!", 
+                    "Looks like we are having a hard time reaching the API lets use some dummy data instead" + responseStr
+                );
+                return ABSTRACT_DUMMY_DATA;
+            }
             // simply return the response of the server to the next promise
             return response.json();
         })
