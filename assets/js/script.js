@@ -78,7 +78,7 @@ function createAbstractElement(data, jqueryEle) {
 
     // create an element to show the quality score
     var qualityScoreOutput = $('<h4>');
-    qualityScoreOutput.text('Quality score: ' + data.qualityScore);
+    qualityScoreOutput.text('Quality score: ' + data.quality_score);
     qualityScoreOutput.attr('class', 'data-output has-text-centered card card-content has-text-link-dark m-3 is-family-monospace has-background-white-ter is-size-5');
     toAppend.push(qualityScoreOutput);
 
@@ -132,7 +132,6 @@ async function getAbstractData() {
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
-            // if the response was not okay use the dummy data
             if (!response.ok){
                 var responseStr = "Response: " + response.status;
                 swol(
