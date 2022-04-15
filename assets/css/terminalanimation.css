@@ -9,6 +9,7 @@ body{
     display: inline-block;
     margin-left: 10px;
   }
+  /* For line 40 in index.html */
   .typed-out1{
     overflow: hidden;
     color: white;
@@ -18,6 +19,7 @@ body{
     font-size: 1.35rem;
     width: 0;
   }
+  /* For "Awaiting Email..." */
   .typed-out2{
     overflow: hidden;
     border-right: .15em solid black;
@@ -27,55 +29,38 @@ body{
     font-size: 1.7rem;
     width: 260px!important;
   }
+  /* For "Fetching Data..." */
   .typed-out3{
     overflow: hidden;
     border-right: .15em solid black;
     color: black;
     white-space: nowrap;
-    animation: typing 1s steps(20, end) forwards, blinking .8s infinite;
+    animation: typing 1.5s steps(30, end) forwards;
+    animation-delay: 1.5s;
     font-size: 1.7rem;
     width: 260px!important;
   }
-  h1 .type{
-      font-size: 2.5rem;
-      overflow: hidden;
-      border-right: .15em solid orange;
-      white-space: nowrap; 
-      width: 0;
-      animation: 
-        typing 1.5s steps(30, end) forwards;
-  }
-  h1 .type2{
-      font-size: 2.5rem; 
-      overflow: hidden;
-      border-right: .15em solid orange;
-      white-space: nowrap; 
-      width: 0;
-      animation: 
-        typing 1.5s steps(30, end) forwards;
-      animation-delay: 1.5s;
-  }
-  h1 .type3{
-      font-size: 2.5rem; 
-      overflow: hidden;
-      border-right: .15em solid orange; 
-      white-space: nowrap; 
-      width: 0;
-      animation: 
-        typing 2s steps(30, end) forwards;
-      animation-delay: 3s;
-  }
-  h1 .type4{
-    font-size: 2.5rem; 
+  /* For "Receiving... */
+  .typed-out4{
     overflow: hidden;
-    margin-top: 6%;
-    border-right: .15em solid orange; 
-    white-space: nowrap; 
-    width: 0;
-    animation: 
-        typing 2s steps(30, end) forwards,
-        blink .75s infinite;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end) forwards;
+    animation-delay: 3s;
+    font-size: 1.7rem;
+    width: 260px!important;
+  }
+  /* For "Query Returned!" */
+  .typed-out5{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end) forwards, blink .75s infinite;
     animation-delay: 5.5s;
+    font-size: 1.7rem;
+    width: 260px!important;
   }
 
   /* animation for typing */
