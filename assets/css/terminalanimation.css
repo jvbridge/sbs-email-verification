@@ -1,0 +1,74 @@
+body{
+    background-size: cover;
+  }
+  .train-of-thought1{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .train-of-thought2{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  /* For line 40 in index.html */
+  .typed-out1{
+    overflow: hidden;
+    color: white;
+    border-right: .15em solid white;
+    white-space: nowrap;
+    animation: typing 1s steps(20, end) forwards;
+    font-size: 1.35rem;
+    width: 0;
+  }
+  /* For "Awaiting Email..." */
+  .typed-out2{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 1s steps(20, end) forwards, blinking .8s;
+    font-size: 1.7rem;
+    width: 260px!important;
+  }
+  /* For "Fetching Data..." */
+  .typed-out3{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 1.5s steps(30, end) forwards;
+    font-size: 1.7rem;
+    width: 190px!important;
+  }
+  /* For "Receiving... */
+  .typed-out4{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end) forwards;
+    animation-delay: 1.5s;
+    font-size: 1.7rem;
+    width: 145px!important;
+  }
+  /* For "Query Returned!" */
+  .typed-out5{
+    overflow: hidden;
+    border-right: .15em solid black;
+    color: black;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end) forwards, blink .75s infinite;
+    animation-delay: 3s;
+    font-size: 1.7rem;
+    width: 220px!important;
+  }
+
+  /* animation for typing */
+  @keyframes typing {
+    from { width: 0, }
+    to { width: 100%; border-color: #3e8ed0 }
+  }
+  /* animation for the blinking cursor */
+  @keyframes blinking {
+    from { border-color: transparent }
+    to { border-color: black; }
+  }
