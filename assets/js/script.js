@@ -130,6 +130,8 @@ async function getAbstractData() {
     var returnedData;
     //write function here that swaps in elements
 
+    // Write function here that will change words in the animation.
+
     // main fetch
     returnedData = await fetch(requestUrl)
         .then(function (response) {
@@ -261,10 +263,15 @@ function search(){
     var hist = readHistory(query);
     if(hist){
         // found a previous query, lets use and and be done with it
-        swal("Success!", "Looks like you looked this up already, we will use your old data for this");
+        swal("Success!", "Looks like you looked this up already, we will use your old data for this!");
         createAbstractElement(hist.data.abstractData, outputEle);
         hist.data.pwnedData.forEach((value)=> createPwnedElement(value, outputEle));
         return;
+    }
+
+    // Start animation here.
+    function animation() {
+        $(".animation-element-1")
     }
 
     // get the abstract data from the abastract data UI
@@ -272,7 +279,9 @@ function search(){
     
     // get the pwed data from the pwned API
     var pwnedData = PWNED_DUMMY_DATA; 
-    
+
+    // Finish animation here. 
+
     // make an object holding both for the 
     var historyData = {
         "abstractData":abstractData,
@@ -484,9 +493,5 @@ function readHistory(query){
     return ret;
 }
 
-<<<<<<< HEAD
-}
-=======
 // Everything is defined we just need to get the history when we do run this
 retrieveHistory();
->>>>>>> c23f7b52696ab362550d1ebd1e3de7f668220bfd
