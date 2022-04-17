@@ -16,7 +16,6 @@ This is a web app that takes a given email and returns whether the email has bee
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Usage preview](#usage preview)
 * [Development](#development)
 * [Credits](#credits)
 * [License](#license)
